@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Facility Types — HonorVet Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#EE1A0F;--accent2:#FF9000;--gold:#FDD826;--charcoal:#231F20;--grey:#808286;--muted:#AAAAAA;--border:#E0E0E0;--green:#27AE60;--blue:#1B5E8A;--navy:#0D2D4A;--shadow:0 2px 16px rgba(0,0,0,0.07);--shadow-lg:0 8px 40px rgba(0,0,0,0.10);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;background:#fff;color:var(--charcoal);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(238,26,15,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(238,26,15,0.025) 1px,transparent 1px);background-size:60px 60px;}
+.orb{position:fixed;border-radius:50%;filter:blur(160px);pointer-events:none;z-index:0;animation:orb-drift 22s ease-in-out infinite alternate;opacity:0.2;}
+.orb1{width:600px;height:600px;background:rgba(238,26,15,0.06);top:-200px;left:-200px;}
+.orb2{width:500px;height:500px;background:rgba(255,144,0,0.05);bottom:-150px;right:-150px;animation-delay:-11s;}
+@keyframes orb-drift{from{transform:translate(0,0);}to{transform:translate(50px,30px);}}
+nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(255,255,255,0.98);backdrop-filter:blur(20px);border-bottom:3px solid var(--accent);height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;gap:16px;box-shadow:0 2px 20px rgba(238,26,15,0.08);}
+.nav-brand{display:flex;align-items:center;flex-shrink:0;text-decoration:none;}
+.nav-logo-img{height:44px;width:auto;object-fit:contain;display:block;}
+.nav-divider{width:1px;height:36px;background:#E0E0E0;flex-shrink:0;margin:0 14px;}
+.nav-title{font-family:'Poppins',sans-serif;font-weight:600;font-size:0.72rem;color:var(--grey);white-space:nowrap;flex-shrink:0;letter-spacing:0.3px;}
+.nav-links{display:flex;gap:2px;flex-wrap:nowrap;overflow:hidden;}
+.nav-links a{color:var(--grey);text-decoration:none;font-size:0.62rem;font-weight:500;padding:5px 8px;border-radius:4px;transition:all .2s;white-space:nowrap;}
+.nav-links a:hover{color:var(--accent);background:rgba(238,26,15,0.07);}
+#scrollBar{position:fixed;top:68px;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));z-index:999;transition:width .1s;}
+.prog-panel{position:fixed;right:16px;top:86px;z-index:900;background:#fff;border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:0 0 12px 12px;width:214px;box-shadow:var(--shadow-lg);transition:all .35s;overflow:hidden;}
+.prog-panel.minimized{width:48px;border-radius:0 0 24px 24px;}
+.prog-panel-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 10px;cursor:pointer;user-select:none;}
+.prog-panel-header h4{font-size:0.68rem;letter-spacing:2px;color:var(--accent);margin:0;white-space:nowrap;overflow:hidden;transition:opacity .2s;}
+.prog-panel.minimized .prog-panel-header h4{opacity:0;width:0;padding:0;}
+.prog-toggle{width:22px;height:22px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s;color:#fff;font-size:0.7rem;}
+.prog-panel.minimized .prog-toggle{transform:rotate(180deg);}
+.prog-body{padding:0 14px 14px;transition:opacity .25s;}
+.prog-panel.minimized .prog-body{opacity:0;pointer-events:none;height:0;padding:0;}
+.prog-mini-score{display:none;font-family:'Courier New',monospace;font-size:0.68rem;color:var(--accent);font-weight:700;text-align:center;padding:4px 0 10px;}
+.prog-panel.minimized .prog-mini-score{display:block;}
+.pitem{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:0.68rem;color:var(--grey);}
+.pdot{width:8px;height:8px;border-radius:50%;background:#E8E8E8;flex-shrink:0;transition:background .4s;border:1px solid var(--border);}
+.pdot.done{background:var(--green);border-color:var(--green);}
+.pdot.active{background:var(--gold);border-color:var(--gold);animation:ping 1.2s infinite;}
+@keyframes ping{75%,100%{transform:scale(2);opacity:0;}}
+.score-display{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);text-align:center;}
+.score-num{font-family:'Courier New',monospace;font-size:1.7rem;color:var(--accent);font-weight:700;}
+section{position:relative;z-index:10;max-width:1100px;margin:0 auto;padding:100px 2rem 60px;}
+section:nth-child(even){background:linear-gradient(180deg,#fff 0%,#FAFAFA 100%);}
+#hero{min-height:100vh;max-width:none;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:88px 2rem 60px;background:linear-gradient(160deg,#fff 0%,#FFF7F4 55%,#FFF2EC 100%);}
+.hero-tag{font-family:'Courier New',monospace;font-size:0.7rem;letter-spacing:3px;color:var(--accent);border:1px solid rgba(238,26,15,0.25);border-radius:20px;padding:6px 18px;display:inline-block;margin-bottom:20px;background:rgba(238,26,15,0.04);animation:fadeUp .7s ease both;}
+.hero-h1{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(1.9rem,4vw,3.4rem);line-height:1.08;color:var(--charcoal);margin-bottom:16px;animation:fadeUp .7s .15s ease both;}
+.hero-h1 .g{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;}
+.hero-sub{font-size:0.97rem;color:var(--grey);max-width:620px;line-height:1.8;animation:fadeUp .7s .3s ease both;margin-bottom:32px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s .45s ease both;}
+.btn{padding:11px 26px;border-radius:6px;border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.5px;text-decoration:none;display:inline-block;transition:all .25s;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#c9150b;transform:translateY(-2px);box-shadow:0 8px 24px rgba(238,26,15,0.30);}
+.btn-ghost{background:transparent;color:var(--accent);border:2px solid var(--accent);}
+.btn-ghost:hover{background:rgba(238,26,15,0.06);transform:translateY(-2px);}
+.hero-kpis{display:flex;gap:40px;margin-top:44px;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s .6s ease both;}
+.kpi{text-align:center;}
+.kpi .num{font-family:'Courier New',monospace;font-size:2rem;color:var(--accent);display:block;font-weight:700;}
+.kpi .lbl{font-size:0.68rem;color:var(--grey);letter-spacing:2px;margin-top:3px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.sh{text-align:center;margin-bottom:48px;}
+.sh .tag{font-family:'Courier New',monospace;font-size:0.7rem;letter-spacing:3px;color:var(--accent);display:block;margin-bottom:10px;}
+.sh .tag::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle;animation:ping 2s infinite;}
+.sh h2{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.15;margin-bottom:12px;color:var(--charcoal);}
+.sh p{color:var(--grey);max-width:580px;margin:0 auto;line-height:1.8;font-size:0.9rem;}
+.sh .bar{width:40px;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;margin:12px auto 0;}
+.grid{display:grid;gap:16px;}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));}
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;transition:all .3s;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.card:hover{border-color:rgba(238,26,15,0.25);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.card:hover::before{transform:scaleX(1);}
+.card-ico{font-size:1.9rem;margin-bottom:12px;display:block;}
+.card h3{font-family:'Poppins',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:7px;color:var(--charcoal);}
+.card p{font-size:0.85rem;color:var(--grey);line-height:1.7;}
+.tag-badge{display:inline-block;margin-top:10px;font-family:'Courier New',monospace;font-size:0.66rem;padding:3px 10px;border-radius:10px;letter-spacing:1px;}
+.b-red{background:rgba(238,26,15,0.09);color:var(--accent);}
+.b-org{background:rgba(255,144,0,0.10);color:#C07000;}
+.b-grn{background:rgba(39,174,96,0.10);color:#1E7A45;}
+.b-blu{background:rgba(27,94,138,0.10);color:#1B5E8A;}
+.b-nav{background:rgba(13,45,74,0.10);color:var(--navy);}
+.b-gld{background:rgba(253,216,38,0.15);color:#8A6800;}
+.story{background:linear-gradient(135deg,#FFFAF8,#FFF5F0);border:1px solid rgba(238,26,15,0.15);border-radius:14px;padding:28px;margin-bottom:22px;position:relative;overflow:hidden;}
+.story::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--accent),var(--accent2));}
+.story-eye{font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:3px;color:var(--accent);margin-bottom:10px;}
+.story h3{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.25rem;margin-bottom:12px;color:var(--charcoal);}
+.story p{font-size:0.88rem;color:var(--grey);line-height:1.85;margin-bottom:10px;}
+.story strong{color:var(--charcoal);}
+.callout{background:rgba(238,26,15,0.05);border:1px solid rgba(238,26,15,0.18);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:0.86rem;line-height:1.7;color:var(--charcoal);}
+.callout.warn{background:#FFF9EC;border-color:rgba(255,144,0,0.30);color:#7A4F00;}
+.callout.info{background:#F4F4F4;border-color:#CCC;color:#444;}
+.callout.green{background:rgba(39,174,96,0.07);border-color:rgba(39,174,96,0.3);color:#1A7A35;}
+.callout.blue{background:rgba(27,94,138,0.07);border-color:rgba(27,94,138,0.3);color:#1B5E8A;}
+.callout.gold{background:rgba(253,216,38,0.08);border-color:rgba(253,216,38,0.35);color:#7A6000;}
+.info-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:20px 0;}
+.info-box{background:linear-gradient(135deg,#FFF8F6,#fff);border:1px solid rgba(238,26,15,0.15);border-radius:12px;padding:20px 14px;text-align:center;transition:all .3s;}
+.info-box:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.info-box .ic{font-size:2.1rem;margin-bottom:8px;display:block;}
+.info-box .iv{font-family:'Courier New',monospace;font-size:1.4rem;color:var(--accent);font-weight:700;line-height:1;display:block;margin-bottom:4px;}
+.info-box .il{font-size:0.72rem;color:var(--grey);line-height:1.4;}
+.visual-quote{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;padding:28px 36px;margin:22px 0;color:#fff;position:relative;overflow:hidden;}
+.visual-quote::before{content:'"';position:absolute;top:-20px;left:20px;font-size:8rem;opacity:0.12;font-family:Georgia,serif;line-height:1;}
+.visual-quote p{font-family:'Poppins',sans-serif;font-size:1rem;font-weight:500;line-height:1.8;position:relative;}
+.visual-quote cite{display:block;margin-top:10px;font-size:0.72rem;letter-spacing:2px;opacity:0.8;}
+.acc{border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
+.acc-item{border-bottom:1px solid #F0F0F0;}
+.acc-item:last-child{border-bottom:none;}
+.acc-btn{width:100%;padding:15px 20px;background:#fff;border:none;color:var(--charcoal);font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s;}
+.acc-btn:hover{background:#FFF5F3;}
+.acc-chevron{color:var(--accent);transition:transform .3s;font-size:1rem;flex-shrink:0;}
+.acc-btn.open .acc-chevron{transform:rotate(180deg);}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 20px;background:#FAFAFA;}
+.acc-body.open{max-height:1400px;padding:16px 20px;}
+.acc-body p{font-size:0.85rem;color:var(--grey);line-height:1.85;margin-bottom:10px;}
+.acc-body ul{padding-left:18px;margin-top:8px;}
+.acc-body li{font-size:0.85rem;color:var(--grey);line-height:1.75;margin-bottom:5px;}
+.acc-body li strong{color:var(--charcoal);}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);box-shadow:var(--shadow);}
+table{width:100%;border-collapse:collapse;}
+th{background:#FFF0EE;font-family:'Poppins',sans-serif;font-size:0.76rem;font-weight:700;letter-spacing:0.5px;padding:12px 14px;text-align:left;border-bottom:2px solid rgba(238,26,15,0.2);color:var(--accent);}
+td{padding:11px 14px;border-bottom:1px solid #F5F5F5;font-size:0.83rem;color:var(--grey);line-height:1.5;background:#fff;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#FFF8F6;}
+/* Compare strip */
+.compare-strip{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);margin:24px 0;}
+.compare-col{padding:26px;}
+.compare-col.left{background:linear-gradient(135deg,#FFF5F2,#fff);border-right:1px solid var(--border);}
+.compare-col.right{background:linear-gradient(135deg,#F2F8FF,#fff);}
+.compare-col h4{font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.compare-col .sub{font-family:'Courier New',monospace;font-size:0.65rem;letter-spacing:2px;margin-bottom:14px;}
+.compare-col ul{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px;}
+.compare-col ul li{font-size:0.83rem;color:var(--grey);line-height:1.6;display:flex;align-items:flex-start;gap:8px;}
+.compare-col ul li::before{content:'→';color:var(--accent);font-size:0.75rem;margin-top:2px;flex-shrink:0;}
+/* Where Map Section */
+.geo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:28px;}
+.geo-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);transition:all .3s;position:relative;overflow:hidden;}
+.geo-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.geo-card .geo-accent{position:absolute;top:0;left:0;right:0;height:4px;}
+.geo-card .geo-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.geo-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.geo-card h4{font-family:'Poppins',sans-serif;font-weight:700;font-size:0.92rem;color:var(--charcoal);}
+.geo-card .geo-count{font-family:'Courier New',monospace;font-size:1.1rem;color:var(--accent);font-weight:700;}
+.geo-card p{font-size:0.78rem;color:var(--grey);line-height:1.7;}
+.geo-card .geo-states{margin-top:10px;font-size:0.72rem;color:var(--grey);padding-top:10px;border-top:1px solid #F0F0F0;font-style:italic;}
+/* 2026 update badge */
+.update-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(253,216,38,0.12);border:1px solid rgba(253,216,38,0.4);border-radius:20px;padding:4px 12px;font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:1.5px;color:#8A6800;font-weight:700;margin-bottom:14px;}
+.update-badge::before{content:'↻';font-size:0.8rem;}
+/* Flashcards */
+.fc-scene{perspective:1200px;max-width:500px;margin:0 auto 20px;}
+.fc-card{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .6s;cursor:pointer;}
+.fc-card.flip{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px;}
+.fc-front{background:linear-gradient(135deg,#FFF5F2,#fff);border:1px solid rgba(238,26,15,0.2);}
+.fc-back{background:linear-gradient(135deg,#FFF0EE,#FFF8F6);border:1px solid var(--accent);transform:rotateY(180deg);}
+.fc-front h3{font-family:'Poppins',sans-serif;font-size:1.2rem;font-weight:800;color:var(--charcoal);}
+.fc-front .hint{font-size:0.72rem;color:var(--muted);margin-top:10px;}
+.fc-back p{font-size:0.82rem;color:var(--charcoal);line-height:1.75;}
+.fc-nav{display:flex;gap:12px;justify-content:center;align-items:center;}
+.fc-counter{font-family:'Courier New',monospace;font-size:0.78rem;color:var(--muted);}
+/* Match game */
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:700px;margin:0 auto;}
+.match-col h4{font-family:'Courier New',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--accent);margin-bottom:8px;}
+.m-item{padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:#FAFAFA;cursor:pointer;transition:all .2s;font-size:0.82rem;color:var(--grey);text-align:center;user-select:none;margin-bottom:8px;}
+.m-item.sel{border-color:var(--accent);background:rgba(238,26,15,0.07);color:var(--accent);}
+.m-item.matched{border-color:var(--green);background:rgba(39,174,96,0.08);color:#1A7A35;pointer-events:none;}
+.m-item.bad{border-color:var(--accent);animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+.check-item{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px;transition:all .25s;cursor:pointer;}
+.check-item:hover{border-color:var(--accent);background:#FFF8F6;}
+.check-item.checked{border-color:var(--green);background:rgba(39,174,96,0.05);}
+.check-box{width:20px;height:20px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px;font-size:0.75rem;color:#fff;}
+.check-item.checked .check-box{background:var(--green);border-color:var(--green);}
+.check-text h5{font-size:0.82rem;font-weight:600;color:var(--charcoal);margin-bottom:2px;}
+.check-text p{font-size:0.76rem;color:var(--grey);line-height:1.5;}
+.check-progress{text-align:center;margin:16px 0;font-family:'Courier New',monospace;font-size:0.85rem;color:var(--grey);}
+.check-progress span{color:var(--accent);font-weight:700;font-size:1.1rem;}
+/* Quiz */
+.quiz-box{background:#fff;border:2px solid rgba(238,26,15,0.15);border-radius:16px;padding:36px;max-width:720px;margin:0 auto;box-shadow:var(--shadow-lg);}
+.q-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.q-counter{font-family:'Courier New',monospace;font-size:0.8rem;color:var(--accent);}
+.q-prog-track{height:5px;background:#F0F0F0;border-radius:3px;margin-bottom:24px;overflow:hidden;}
+.q-prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+.q-text{font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:20px;line-height:1.45;color:var(--charcoal);}
+.q-opts{display:grid;gap:9px;}
+.q-opt{padding:12px 18px;border-radius:8px;border:1px solid var(--border);background:#FAFAFA;cursor:pointer;transition:all .2s;font-size:0.87rem;color:var(--grey);text-align:left;}
+.q-opt:hover{border-color:var(--accent);color:var(--charcoal);background:#FFF8F4;}
+.q-opt.correct{border-color:var(--green);background:rgba(39,174,96,0.07);color:#1A7A35;}
+.q-opt.wrong{border-color:var(--accent);background:rgba(238,26,15,0.06);color:#c9150b;}
+.q-opt.disabled{pointer-events:none;}
+.q-fb{margin-top:16px;padding:12px 16px;border-radius:8px;font-size:0.85rem;line-height:1.65;display:none;}
+.q-fb.show{display:block;}
+.q-fb.cfb{background:rgba(39,174,96,0.07);border:1px solid rgba(39,174,96,0.3);color:#1A7A35;}
+.q-fb.wfb{background:rgba(238,26,15,0.06);border:1px solid rgba(238,26,15,0.25);color:#c9150b;}
+.q-next{margin-top:14px;display:none;}
+.q-next.show{display:block;}
+/* Badges */
+.badges-wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;}
+.badge-item{width:110px;text-align:center;transition:transform .3s;}
+.badge-item:hover{transform:scale(1.1);}
+.badge-ico{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin:0 auto 7px;border:2px solid;filter:grayscale(1);transition:filter .4s;}
+.badge-item.earned .badge-ico{filter:grayscale(0);}
+.badge-item.earned .badge-lbl{color:var(--accent);}
+.br{border-color:var(--accent);background:rgba(238,26,15,0.08);}
+.bo{border-color:var(--accent2);background:rgba(255,144,0,0.08);}
+.bg{border-color:var(--gold);background:rgba(253,216,38,0.10);}
+.bgr{border-color:var(--green);background:rgba(39,174,96,0.08);}
+.bbl{border-color:var(--blue);background:rgba(27,94,138,0.08);}
+.badge-lbl{font-family:'Poppins',sans-serif;font-size:0.68rem;font-weight:600;letter-spacing:0.5px;color:var(--muted);}
+/* Modal */
+.modal-bg{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-bg.open{display:flex;}
+.modal-box{background:#fff;border:2px solid var(--accent);border-radius:16px;padding:40px;max-width:460px;width:90%;text-align:center;animation:fadeUp .3s ease;box-shadow:var(--shadow-lg);}
+.modal-box h2{font-family:'Poppins',sans-serif;font-size:1.7rem;font-weight:800;margin-bottom:12px;color:var(--charcoal);}
+.modal-score{font-family:'Courier New',monospace;font-size:2.8rem;color:var(--accent);font-weight:700;}
+.modal-box p{color:var(--grey);margin:10px 0 22px;font-size:0.9rem;}
+/* Cert */
+.cert-input-wrap{max-width:400px;margin:0 auto 24px;display:flex;gap:10px;}
+.cert-input-wrap input{flex:1;padding:11px 16px;border-radius:6px;border:1.5px solid var(--border);font-family:'Poppins',sans-serif;font-size:0.88rem;outline:none;transition:border-color .2s;}
+.cert-input-wrap input:focus{border-color:var(--accent);}
+.cert-box{background:linear-gradient(135deg,#1a1a2e 0%,#231F20 100%);border:3px solid var(--gold);border-radius:18px;padding:48px 40px;text-align:center;max-width:700px;margin:0 auto;position:relative;overflow:hidden;}
+.cert-box::before{content:'';position:absolute;inset:8px;border:1px solid rgba(253,216,38,0.2);border-radius:12px;pointer-events:none;}
+.cert-topics{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 24px;}
+.cert-topic{font-family:'Courier New',monospace;font-size:0.65rem;padding:4px 12px;border-radius:10px;border:1px solid rgba(253,216,38,0.3);color:var(--gold);background:rgba(253,216,38,0.06);}
+/* Scroll reveal */
+.sr{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.sr.vis{opacity:1;transform:translateY(0);}
+.mt{margin-top:20px;}.mt2{margin-top:40px;}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:6px;vertical-align:middle;animation:livePulse 2s infinite;}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(238,26,15,0.4);}50%{box-shadow:0 0 0 8px rgba(238,26,15,0);}}
+footer{position:relative;z-index:10;background:#F7F7F7;border-top:2px solid rgba(238,26,15,0.2);text-align:center;padding:36px 20px;}
+.footer-flag{display:flex;height:5px;width:100%;margin-bottom:22px;}
+.footer-flag .f1{flex:1;background:#EE1A0F;}
+.footer-flag .f2{flex:1;background:#fff;border-top:1px solid #E0E0E0;border-bottom:1px solid #E0E0E0;}
+.footer-flag .f3{flex:1;background:#0D2D4A;}
+footer p{color:var(--grey);font-size:0.8rem;}
+@media(max-width:768px){.prog-panel{display:none;}.match-wrap{grid-template-columns:1fr;}.nav-links{display:none;}.nav-title{font-size:0.6rem;}.compare-strip{grid-template-columns:1fr;}.geo-grid{grid-template-columns:1fr;}section{padding:80px 1rem 40px;}}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div><div class="orb orb2"></div>
+<div id="scrollBar"></div>
+
+<nav>
+  <a href="#hero" class="nav-brand"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAxCAYAAAA87YCJAAAzOUlEQVR4nO29aZRc5XX3+3vOWHP13GqpNXZLas2zQMZIzEKAxRSCY0icxDHO6zgsvN6LeY1zr/2yDB9i35gYeyXotZMsGxYmJGAbCGCwAMlmEAgJTd2a1epWq+eu+dQZn/uh6hTVGLDz4dpf2Gv1quo683P2+e//Hp59hG3bGIZBKEEQACCEQAgJgESpLReVHyp/AaCAVMCV4LoBpbKz0CmXRzzHznZ2tguFAIFSWV8ETBdl+r+y/iAgqZ5L9UDyg7aprV6/799c52P5/YgGFSVSlMpNCD8rNyhAIvGBoKoUOiB8wKNy36rKdD5TlqcHhnjxpZc5evgoM1pT3PH5W+SyrgVCBQLXRdEVIMApWxjReGVjCUEAMghQlQCUioZ6gQQ1wMfBQAAKrgRFmAim6TMaAVTP8j1l+lip/hAibNtG07Q6RQqlolB+4BMoGhIVhYoyqZVFBK5HYGq8eeiofOLZ/+JQ7wkC30XxXNxylg0XLOdPbrmJ1T0rhXRdNCBwHZRoFRElFQWiolBCShAqoIMAT1QOpFWxyUetoKUExwHDrOxGBQQe70FcZT3x/9uwfSwfJtqHL6rcaFVRUFCQEnwPNA0Q4ErJSGnSePyRn9t7D53AlQKNAMfO4JYGGRoa5JfFccxYIwhTrl68RBCAIs0KpDm5ZejFQ6g2vmagKKYGMR8PcKyNQaDu8dQIEVOrgI8AVQW/AlxoOiDBF5XFoKFV9UkKCAhQPlaq37t8hEJBqFQiABmArlZ+HZmaXHj45LFjP3/+F4xmCozmc+gCFD/LSP/b4Jxl9eJFOAL2v/lf2NkjzPufX5aNkSSKohCMjqKoNk5pCDcoYvsSie5ppIhH0mgNTSiRRiJCE3gqOIDkOiI8oyqAkJU/FCpGtCoSENPZ1Mfy+5UPVajQePg+aPI9RpLJTl6358Dep1/Z8xbZQBBE4zS1aeRG+jl78ldowXn+aPs6/vTTN+E4Cq+//TYThZPYpVcZKVho5RKlc4MkfRe1WEDYNtL2KFsexYKD5wpS8QZijfNpWrVN0twFsaYNKJFncA0IXHzNQYkYVRTSUP3qOSsVxKro/cfo9IeQD+VQkoplIoDQB5waHTT3H+8tH+w/y5mJPGUZYWJinDN9b3P26K9Y0Frmi3++jeuuuABN2kSNCEMjw9h+ifaOBmSQJShOkvI9RKYEBRVGcpApgaqBKimWCkwWCmRck6LSSdvctcxZtAFt5mJIzIyhG+uJqbs9RQUUVFSEX/UiFUBUTB7wsUL9AeQjFarkgamBFkBhYrzn8Il9vSfPnWMi0LBFgjNnJzlxdD/HD/4Xa5dEuPOvtrBkQSNe0aKlpYVCySKdTCCkB4URcEYo54fRBXhjLna/y/n9g2SPn6cpGWHWolais9NYaQ3H0Dl1bJhiRmDQwZx5G5ix+groWQexxNJiIHtNPUlFqZRKRMKjokV6hVdV9etj+T3Kh5q8AFC0ymexZNM/MtibK1kkm5uxSzA2NEluYph3XnuR1Ys1/uZz21i1NEZEL2G0NmFbFrG0i4gWYGQQ/BI4k0TwIeOhBgnMthk4bXGsyTglNWBMSdIQaSDR2US0Lc6azjaG3znKucN99L85ROnUWeZ/YhTxySuOxBtnCKcat1DxqrwKKhClfaxJfyDRPM9DVdXaD/UxqTDec3rotCw6ZbREGuFIctkxStkpzhz6NbMainz1b/6UjUsaiBiTOIFNycsTS+j41iiUc5AqQi4Htg1WDCbi5I/nmchYDE4FbPiT/4G5dAnIEoXSEI6aJWKWoC3JjA0GEfcApZMl3MNvcvDYIHOiCRou/xR2EKCrCsIPKgqlehAIkCqqELiuj66rBEFQDdS+p2W2bWOaJp7noWmV5yr8Ho6BlLK2fv22v6uE279/2/rff9s6H3Vsz/MQQqCqKuVymUgkAoDruui6XruO+mu0LItoNDrtOOH+fd9HUZTaef13rjk8X61+oKWU0y4EYDw71eIJF2Ga6FqccnEK6UvOHN1HZmQv/8/dn2bLhjngDqIYJhHNxEch546SigbYuXGEZ2EoGuWS4PyBYc4dKHD2dJl3T2dxGjoYX56jUZvC0zVmzlzMghkmMhjBnjqCKW0aZsyjfHgvc2MpBiczZHr7aFh9sYy1dAobcAOBrlURSgkfA4Guq7XBhcrDEgQBUkpM06wNYHjt4aDXHqi6AX3/jf9dBvzDloe/v1/R6/f5u9zM8HwBVFVFSonjOJimWbuO+usHiEajNQVzHAfDMAiCAMdx0DRt2rn8Nqk/x/C79kGDBhX+EUiPbG5iDAXijY1Y4x5OOcfo0FmG+/fx55/ZyFWXzEQJhipEy42BH4AZIHSFAkWUSAzTbcQqCEbLLqXmbmZc083s5AL2/ugpDpwY5sB/7QGzF8+XDJ0/y4zWFFdeto4/vXULqWg7+aEhWs1ZOKNnaYrMYDyTATM+U7VBM8HXdVzpQK4wL5ZMnUFAtlgiHjVrgx4qU/h//RMdDkgQBOTz+TsMw9hR/xS/f/DC/z9KqeqXvf/mhL+/n7f+d1HQdV08z0NRlJoyhMoUXp+qVhDadV2EEBiGUbNIYcpNUZTaWPi+j+u608bmw+SDUFR7/4WEFxnIgOzkRJMqQDUMItG0YlmjgWUVOXVsH3M7I2y7agnx6CRIB9QISBWUOCoO0o6CbCAS6UCRaYxolDnLZiKalwKt5NyIMfNE2aE7T9xMMTo6Tj6bo3PmPKYyGf71kZf5z2df4auf3c41iy5j9OiT2KMljKSFoZlgO0NoCNcCNQqq0DBTqTNQwadEPFYj5aF5UxSl9r0+f1m/PJ1O76gfsI+6yb9t2Yc95R9m5v67ouv6NPRxXRfXdYnFYkQikWnoFCpaeFzbtmvoqChKTcmklNPG5neVaSav/kDh/65rkxkfm4g2pjDUuJbN2YHnu0yMn6WQP8OtN60i3WCjRgIQCgQSAoMg76GkUqSUFKXhMXy1ASXehdo6F0iStQNKmKZutgV/+dm/nq/Bchzs/MTYLh3bPXDggP/2O0dYMWc2x86d575vP87QVcvpyGo4Iz5benpILFwGyYRAQFytHLrkWKimQKDi2A6mEcFxKonv+sEMB7heuUzTxLZtFEWpLS+VSrWn9MNQ/LcpRKiQH8SPwmUfpFxSSnzfr93kjzqO67q16xJCTEOW8FpCFJNS4nneb4xJKPWo/f6igQ+SD7ou7YNW8H2fUqG4SREQ1SJzAyPt9R3rw/dKnBvqo61Nsn7DPBqa8qAW8cp5NEMBr4hCDPwGzu07QaGksGjZMkgswitpKdeI53Uzjle25emTg7ilAOG6zGtvoiURE7FYkssvvVRsXL/p4oN9p3Y9+8vX6Z7dyc9+9R8sjygsnbOEt0oSc2CY5f1n5ZwZi4QWU1F8SULX8Alw8TCNOAqVpzLkBsVi8d5oNPqApmkUCgUSiQSmadZIakjQQ4nFYh85iCH/+W0D/kHrfBD3eP/yen702yRcV0qJoihYloWu6yiKQqFQuCuVSj0YrquqKvl8/t5kMvmAbds186Zp2jRlDMn5f0eEENMRKhTHccjn86/Fo3GUQEuPjxTIZwo4/hiOfY516+aQSktKZRvT1AkiKrZXxAgEoqmd8jvDvPbiUS7949txEp2YaqTdjdC8/8CR3K5fvcXw+SwNyWZ0VcN2LDzPI51Oygs3bWBB9/xYS3Pj7tUb14iZM2fKJ3/6Hyzf9An27XoVYq28cGyQEyOP89mGFu757BIo+0g32yaSxqhbKLTsfffw2PiEzdG+E0SjKkuWLGbevHl0dXUJIQRjY2M9e/fu7R0ZGUEIwfj4OBs2bKCnp2dJKpXq0zSt9nSGvMr3/d+4yfX8JyT64aC+n9TXOzuhkn3QuPu+j5QSVVU/cHk9Okopp5UaZbPZO44dO/bw+Pg4fX19pNNpVFXlwgsvJBqNPhiile/7nD59+v5XXnnlftM0Wb58OQsWLKCxsVFEIhE8z8PzvN+JQ4XHr79WTUEg3leH5Lj+XxStMvFUnKLtHjjVP4aUktzUeZIxm3WrOjG0cTQzoCwdpJtD+AGmaeIOnuGnTx5k7cZbaZq1SpHxpDw6eFK+vOvXlAo+y5YsZ9sV3cQjSQxNFUWrIG0/4OTZM/xqz352vvFG6YorL2b90h4xb16HuOWPbpJPvvoCmazNmUNnGBQGpJt4+ddv8Oef+qP57Y3p0yISHa3U1Ahj5YrVV+7bd/TFhx9+mEhE4bnnnmXWrFnCsiwikQjpdLrvggsuuOl73/vekzt27OCiiy7i+uuvp7W1ta9UKgEVUyGlpPoE3+t5Xq+iKK2mae4wDGOaMoXKEg5uaFrqkcz3/WnLVVVFUZSaWQu9M8uybguCYNwwjBdM06yZrPAY4XFqfKWKvLquP5BOp3d0d3ePlUqlJ5977jmOHj3Krbfeys033yxgekiksbGRV155hXK5zKpVq+jo6BDZbPYOVVV36LqO4zh4njdNYT5I6k16+KcFjltJ3XsStEopWzZf+pcyKoqik8kVmcpnEIHN2Og5OttizGkqE1czlHWNUmBj2hOkVBPcCKdOjTJWECy66hbhqQEDoxPykUd/xuLFS1ixtBtQsD0Lr+TS2NRAvDGuyWLRiycM1q1fwdPP/JyHHvo+d3/5Trl60ULRPKND3PKpW9qtKXv4YEHBTzUgYwZeLk/RK58qeqaImTqgYSYiQ8L1hpYtX3Kx79m7k8k2Ojo6hKqqNRNQ5QVPLVy4EE3TaG5uZubMmQIqZs51XYIgYNeuXXLnzp3Ytk2hUKBUKtHS0vLwli1buPrqq0WYXVBVlWw2u/X73//+85/73Odq+4IKDwHYs2eP3LlzJ47jsGnTJq677joREuaxsbGeZ599tvfUqVNks1ny+TxCCObPn8/VV21l/YYNwrbKqKpKb2+vfPrppymVSliWRTqdZmpqigULFtx/8cUXs2btWrHpggvF1iuvkiePn+D48eNMTU3J2bNnT4O7iYkJhoeH+cpXvsKaNWvEq6++Kp966ini8fjDQRCQy+VIpVI4jsONN95Ia2sr//iP/1jzGsPYpe/7xGIxcrkcAIsWLaqrQlMqx/QCsGyHsm1jW2UymQzFooUvA8rFHA1xFYMcup9BlKfQ7CwJ4YBdQOaKvP76W2zZug08j4Id8JMnfkr3ohXMW7AYRdFoamqi7FgITVIo5WWAL+KpuDJ//lwWLe5i6zVbMU2T//cfvsupwSEpFYW4GV946ZbLSLW0EG9spCmRYtmChSQSiRWKaeCi4KNWUsWagaqKuUKpBDV1XcfzvGkENSSb4XdFUQjRqVgs3vb1r39dPvTQQ2zdupV77rmn9Vvf+tYXvvrVrzI6Oso999zDHXfcIfP5/FZVVSkWiwRBMPbcc8/xjW98A8/zmJqauhEqHE4IwYYNG4Rpmuzbt4+LL774C7Zto+s6+/btk3/2Z3/W+/rrr3PFFVfwzW9+82vf+ta3Nl999dX8/Oc/53Of+xz3f/ObMhKNous6S5cuFYsXL+aRRx5BVVWuv/56LrvsMp588kluuukm9rz5pjRMkxtuuIFoNMrRo0fJZDLTzknXdV5++WWam5u54YYbhKqqrFq16vZkMsm//Mu/0NLSwr333su2bdswTZPGxkampqaYP38+11xzDddccw1z5szhmWeeYc+ePVx55ZXcfPPNbNy4kXK5XK9QlaSqF0hyhQJ2qUSQmyDTf5ZCtoRVcsgXJkinIkihIm0fcypLIpNFcW3wFIQbY3wow9JV3WCUZ7/97l7pegFt7R014jc4OAiBj6YIslOTjIycdwcGBoJTZ05z6EgfzS1t9CxZRrFs8corr+BYFqau/Grl8sVi9cplNDelaG9t4dJLNpNMxA7pKJXqgsBFJUAVoAhZFrLCBcNcJbzHUUL0MAyDcrlMiE6FQoEHH3zwkRdeeIG/+Zu/4aKLLhKtra3j6XR6x7Jly8R9993H9u3b2bVrF3feeefzuVzurjBelclk+MUvfsHdd98tgyAYD4+nqiqRSITW1lZM0yQIgjHTNDl27Jj8xje+gZSSr3zlK2zevFkkk8kHEonE7ltuuUX88Ic/JJlM8uSTT/KTxx6TjuOg6TotLS2Uy2USiQSr16wR26+/Xtx+++3E43F++MMf4rkus2bNElu3bmViYoInnngCTdNIJBJPQWVMXnvtNa699lqgQtITicSjIdp2dHSQTqfF5s2bxZe+9CXa29vXdXZ2cscdd3zhiiuuEBdeeKG44IILsG2blpYW1q1b97VNmzaJ22+/XXzqU59CCZEJAVKCG/hki3lKZYtsIc/Q8Hks22EyO0G5PEY86hHzHLRcgUixhB6oUIwjJ+Pgz+TCi29EjadBV7te3rWbouVy8nQ/k1NZhKaSTCZZvHjxvKGhIUZGRjh5/ATH+vrYu3cvO3fu5JVXdzExmUXVTF779Rvk83kpRCXQuuXii+iY0cbc2bP4xAUXLNcRCAIEfuXkAQIfEfgDCgGGprNnzx555MgRuW/fPrl//355/PhxuXfvXjkxMVGD7hDGDx48KB9//HFmzpzJlVdeKUIzCZDL5e7q7u4W1113He3t7fT29rJ79+7vVIOGe7u7u+ns7OSxxx7jgQce2DUwMCBVtRKpl1KiV5XB9/1+y7J46aWX6Ovr49Zbb2X+/PmiUCjg+35N+Xt6esSdd97J5OQk3/72tykWi1s818X3fZqbmwmCgLJlgZQsX74cKSVTU1Nouk4kGuW2226jtbWVJ554gmKxiK7r+L7P22+/LS3L4tprr6VQKNScjXK5jGEYtLS0EI/H8TyPxsZG0dLS8k5nZ6dIp9M7giAgGo1S/ymEeCB0YLq7u4UmhagoU9XcBUiyhTy27zBZ9hnIF4hHkpQmzuAyihroxIsW2FlImJCR2LkojpiH0tbDJ7evB20Gg+enXu4fHGH+oqVMTE1x4NARNq5dQ1NDirMDZ840NaZxbIti0cVxnErezTQZHBxiKl/AcX3Oj49zbuAc7a1tSAkLu+aKJYsWyZbmZpobU4dldfqEQFDLPMoAgbQUIRkY7Od73/sew8PDpFIpFEVhYmICXdcpFArToujlcvmu119/nUwmw9KlS8nlcrclEolHQ9Icut7r1q37Wjwev//kyZPs2bOHa6+9tkaqH3jgAb761a/y9NNP43keX//617c2NTW9UCgU0HU9RMXNwDu7du3CcRy2bNmCoigkEolpZFdKyYoVK2hqamJ4eJjTp0+/snbdOiGEINyf67p/FYlGfzA5OYmqqvzt3/4tjm1jmCZdXV03r1y58j93797NM888I7dv3y6i0Sj//u//zqpVq2hpaREhuvq+Xwt0jo2N1eJVruveVY2wx5LJ5ANhisayLBzHwXGcmkcackItRCeoVBb4QbAik81iS8l4scCU6xKoBcYnzxO4Fl7JgqxVScJqgjff7COwl7Pp2sugdSUYswVEeefQAdnY3EY2X2RO50w6O9o5c+YMhaYU8VgUIatxExWCoBL/ScRT5EsOKDpmNImbyfDuwUMsW7aMeLzCe9asXklzc/PFQLUGvWKvFZVaVaAisRVFYUZbKzt27PiClLLouu5ewzA2x+PxHZqm8cMf/lD+wz/8A+VymSAIiEQiDx45cuQ7hmEQj8dpaGh4tD7X5rouiqIQj8cfmDNnzv1DQ0NYlhW6+a2xWGxs7ty5/OAHP+CLX/wiTz/9NKZpPv/lL3+Zjo4OEY/HAXBdd28qleLYsWMUi0USicTcMKcWOgSapmEYBqlUis7OTgqFAufOnWPtunX4vo9hGJw7d45isfh/Dh8+/H9efPFFvvjFL7J+/XphVAOWsVjsyUsuuYR3332Xf/3Xf+W6667j7Nmz8sUXX+RHP/oRqqpOyxAkEglUVeXxxx9nz5490vd9jhw5wrPPPivq83/hQxiPx8Ok9I2apj0VIqBWeRqqSXoFfOTUVC6LLQWnz49gBwpjpQzZUgG9BHYpRibn0RBvgKxD774cnq6yadYVLRgNE5ZbqT8fGSswMVVk5twmisUiXhAwZ95cUjETz3XIZafw/SpZVhV006RglXE8H8fzcT2fhsYmBoeGEWplmoIfQOec2SKi6/iBj65UqyQCCajVsuCAQIhUUI3n1KdSgL6pqakbU6nUU9FolEKhUMu8B0FAPB4nmUwyODhIPp+/N5FIPBBu6DgO8Xgc13UxDKPmZVXRbaxUKqFpGnPmzBH333+/vP/++/npT39KJpPhvvvui4XJ51QqtTuXy93V0NBAsVhkeHi4v7W1VdQ7DuVyuYYSnudh2zZtbW017qfrOgMDA3z3u99laGiI/v5+7rzzzoqbX0VLwzTZsmULjz32GEeOHOHw4cPytddeY8WKFaxevVqE5hjeSxM5jsP27du55ZZbvpDP5x9+6623CGNTIW8LY1SWZaGqKvF4/Kn6pLoSUBcsExAEgWtZFsVikczoOFoAVqFI2REUSwlsp42pQgPIGQRWhJgwEV4cnEiHb4Oqg9DBjMZRFIVYLEZjYzOnTp1iaGiIxsZGZs2a1dbd3c3KlSvp7u6mtbWV2bNn09TUwoIFC1iyZAkrV66kvWMWhhHBjCgUyg6qAob+npkKxfMFvl8p2ZRoBFJEPAmqotdc9/CzsbHxqbDkw/d9IpEI5XL5NsMwWLp0KZOTk5w5cwYhxANhLKlcLhMijOd5jI+PE41G6e7uBsA0zXipVEJKSTwe58ILLxTf/OY3SSQSvPrqq3z7298uhkgQBAG6rj84e/ZsbNvmueeeq/GY8AaHSCClpFQqoes6XV1dC6HipRWLRdatW8fXv/518fnPf56RkRHuuece4vF4BcFME9/zWLhwoejq6iIajfKTn/yE559/nrvuumtaukZKWVNggIaGBkzT3NHZ2Sm2bt0qisViSOpr6Fk1hwghKJfLd4VxNiEEiud5d4VBWbViT8vlcpmxc+eIlMtY586jWgq+FWUik+DU+RhmegOkVyHtOLOa2pGFKZg8c1A1bYSseFrphhiFYo7x0TE0TaNr/gIymQy7d+9mYGBg1A/AiESSzS0tWk9PD3PnzqW7ewEtLS2YemUmnhAqLW2tSEA3jersOx/Ht9E0vTYZQSigqFWHVVGYyhd2q5qB47m1nFUY9Q6Vwvf90ASh6/qjrutyySWXMHv2bMbHx/nlL38pq+hDJBKpKeTQ0JA8e/Ys8+bNY926daiqSi6XK4YZ/bAGaeXKleLhhx9m5cqV/OxnP+Of/umfpkXab7rpJlKpFI8++igDAwMyjJCHCuV5HseOHSOXy/EXf/EXRCKRbUAtKBp6ZStWrLj9L//yL3nrrbf4u7/7O5nNZjfCe2mYz3/+8xQKBV599VWi0Sjr1q0T9Tm6kPuECuU4Tg2Vqkp9b/h7WA4TolSVEz4Y5goBlHg09mAQQMkqIwDDMBo0TcMq5AnKZWKKiulKWqJpSlkLU0SZ2TSf13/yLOWJErOSCVLeJDjDYE9KQWU/q1YsUw1VIfAceg8fIhqNsmDBAqSism//u+z+1a/pO3o0PzmZ8fKFEpOTk5TLZaKmQdTQcctlbNuiZ9FiBBD4LpU5eqCrKuBX6t796tQ+AYWiBwIMM5rwggrR9H2/xjuqua3ap6qqZDKZWsBu8eLF4q//+q+RUvLP//zP7N69WxqGUasxKpVKPPbYY6RSKe6++266uroE8BtlMI7jALBhwwZx1113sWDBAg4cOFBDxWg0yoUXXth61VVXUSgU+Pu//3vOnj0rAfL5/L1BEDA8PCx//OMfs2jRIj7zmc+QSCYfsstlSqVSLUfpeR6pdPrR7du3s3nzZp544gkeffTRN+1yuaa8a9euFZ/85CcZHBzkj//4j0MyD0ChUMAwjJoyhaUuofkOgoAf//jH91MBmhqqhdehqiqWZd1YX9inKYqCUEATlSlJKqJJRTA+NYnwIImKLNpMjZ+jM+3zqU8u5c3/eJTjO99mvj6b2e0tDOoTMNYLCxagCYkTSGa0poNFXQs41X+Gzs5ODuzfx6pVK1i5ahWFfJ4TJ07w9r79FEtlTNMk1dCERKVQsio8QREogc/i7q6kAkQ0BYFLWC0ufVCEiq5WlEpVIZrQGBqeiD73/HMF1/fJ5LIcPXpUzpgx4+poNPpCNBolkUhQKBQ4cOAAkUiE/v5+jh8/LhcuXCjK5TKf/exnRXt7u7zvvvu4++67ufLKK+WmTZsQQvD444+jKArf+c53WLx4sZBSks1mbzt48CCjo6McO3aMmTNnUh9uuOCCC8SOHTvkHXfcEaLjXcCDbW1t41/60peYNWsW//Zv/8bZs2e5/PLL5erVq+nv77//0UcfpWv+Au67776VTU1NB8uWhWmaHDlyBNu2OXfuHJlMRjarqli0eLH42te+Ju+55x4eeughxsfH5Z133rlSM/RN6XR6x6c//Wksy+Liiy+uxd+CICCRSCClZHx8PHbs2DGCIODBBx/k3XfflYlEgqmpKTKZDF/84hdrXNN1Xfbv31+rBH333XefXL9+vUgkEpWKh2K+QCwer06OhJzt8vh/Pil/+szTKKqOUyjTGGjYU2f5v758A8q5Q7SePcbep3/F6lWw9KILOHNyiPTKS2m8/X+BMeuyQKZeLnnw8q7X5FM//xmdnZ0UrQKpVIqenh7md3dRLBbJ5/OcGzxPf38/k5OTWFYZy7Iolcr4dplPX389t9/2R0JTAsAFXBzPajO0yAaB9iyYIBXc6gRUHzh95qzs7z9NEHhYxSKJWJxZs2bR1dUldF0nk8ncdvLkyUf6+/tr9URhQG/58uUCIJvN3iGEiL322mvfOXLkCGNjY8yfP5+VK1cye/ZsOjo6RKgw+/fvl+Pj4+TzeZLJJC0tLaxatUoIIabl6s6ePSv379/PddddJ8K4V8iT9uzZI48fP87AwECNx1x++eUsWrhIuI6DbhiUikUGBwfl4OAgxWIRwzCIRCKsXbv286Zp/sAwTSYnJjYeOnTozcnJSRobG1m3Yb3QdR3Lsm7bv3//I5s2bRKu604LUeRyubsGBga+c+LECahYKDzPo1AoUC6XWb16NWvWrBGWZWHb9m2O4+zev39/v+d55PN5uru7mTdv3uaGhobdiqIgcpNT25Pphp+jgO1IMASv7XlHfvuhh8hYFglTodEp8bef2UrUOo43uJ9FSsDBl16lfB6uvHU9lggY0NMsuuV/wuyNIFpF2YeCZS/50SM/PvLSzl9y5dZtZHJZMvkcc+ctoL29nYaGBsrlSnqnXLIoFQqcOnGS0dFhUrEo//ur/4s5nR3Cd/N4frHRjOqe79o5VY+0gzEKJoEDiqbXJng6vo+UPooKhlK5EfF4vGbqYrHYtLr5kEOE3CB0kcOqgZCLeJ5XC1CGUq8UYdFafZWCoijTYjXh/yGHqa/hBqZto+uVsG2pWCRWdQjqRQYBIkxSSwnVfWQzmZsSicSTqvbeRA3f93Ecp4Yy4Xm/v7489CBDrhSauPpkd7FYJBKJ1M47NJu16k9NUX8OIP3KgVSgvbmVwLFRpceKRfP4zK1XEY1YaJrLxku24MYM2rrm0n8ehk+OYUYjNKVNMkOHwB9B2pnlERWihtr72dv+ZMvSJYs5fPBdUqkUjU0t7H1nH3vffZfevuNIBJZVZnJyEl1VkL7NvM5Z3Pd/f42OtmYBNqohMCPqJDg5VfMAdwRpJ5Aeiqbi2T5W0a3UQGkqEV3BUBQEAZFIpAbvYY1Tfd1T/UCqqorjONR7gUKImoKFyhTyF03TmJqaujHcX/h0hzGrUAHrKwrCeBO8x1mKxWKtCC7cVghB4PvE4nGCKn+xSiWKhULtGgLfRwYBCIFfPYd0Q8OTqqbhV6sFQrIfRrbrJRqN1pyNYrEYpoYqilEtNgw5VXiNYfwpVLBYLDatEE+4RQstrCcOAA3GJvKzvvv97w6m41G2bVlLwh+lkD3LyrUroSEOb+5i4M132P3UC2hugUsu7yHRPQOrq5vmtVcTyMUoyQUCdIq2R6DoPPLYY7L3+Cma22fgSsE7+/fhOwFCkaxesZxkLMbAmRMsW7yI66+5lqZ0XCR0FYTzyeLE+d3xlF6ZcRp4ECigxrCyLtGGmSJsroGAffv3ymxuEkVRyGWLzJkzj1KpxJIlS76QTqd3hE8rQKlUuri5uXl3qDj1dUqlUqmmIGG1QmjCstnsHel0ekdYqAfTZ5MUq6gYEtl6pJuYmLi4ubl5d7lcrlU/lKskun5SgaJUJq/mc7m/UhTlB+FN0w1jGiK51WsJvbDQC9R0Hcl7kxZc16VUKt1hGMaOsLIzdPVDZQ/DFWHA03GcWklwGMSNx+OUSiVisRiWZdUmO4TIL3zLRgk1TFTSL0KFwwcPy9nNTcmJc8fyg2f2cskN20CPglOG7BBju15ivLePJ/7pKa7dEqVj8SyaLtpApGcdNKyGRBcySCRQ0kVP6uRzzuozA0P73jmwn+NnThIokuMnTyCEIBFLsmRhN5/YsJali7rXNKbM/brwoZSXnD3NKy88zaKu2cyc1Q7RGL4jUdNt0DYHAn0WkfiQFwgUTWVsYrQ5lYxPHD16VJ48cZorr9z6ZcdxdjU0NLwTmqe+vj7Z39/P/PnzsSyLVatWidDcBEHA7t275axZs8LCNebMmbOktbW1r4om9+7cufP+lStXMn/+fDE8PBzbvXt38ZJLLlkSi8X64vE4UkoGBwfl2NgYPT09IhaLMTAwIE+fPs0nPvEJEbrd1dCADI89ODhIT08Ps2bNEoqiIBBMjI+veP311w+sWbOmxt08z0PTdaxSibNnz8pQcaulLJViuWgURAV9x8bG5Pj4eO2m27bNokWLRDQarcWhnn32Wblp0yba2tpEmCYaGBiQ+/btq+UKly5dKkJknpyc3HrixInnk8kkQgh6enoEgOYLELJqjwVoaiWDsXL5MlEcPp9MJpr4xKU3gtZ8aeCbryiGBylkc89CGs0M6y+EI/stGpMZRvf0MqdlLrAfEj6BMqsAEaF4Oo26sb9p0TyxoHmmFkSsy6fKE88XPAszGicaaVKiWrQ5rmvjMdVDkEtijec40sc7//R98n297Hdtil3dRNLNnC8GjKgxYktWcPmX/hY0iR1IhKLQ2DpjQjqyUoqMRiqVejCs0Yb3ymuPHj3K5s2bha7r5PP5u1Kp1IOe57F7924ZBAGdnZ3CMAwKhcIdvu/PBfqklEQikQfOnz9//6pVqwAwTXPrxMQEpVKpN5lMCqjwMsuyePnll9F1XXZ3d4uOjg5x+PBhWU3z4LoufX198ty5c2zcuPHqRCLxQjqdls888ww33HBDS1tb2zgCzGjk4JG+XjZeeMFcFIEvg0qpkYBTZ07LgYEBNm3a9IV4PL5jdHRUPvf889x88813RGLRHdVqi7teeukltm3b1ppIJMaj0SgjIyMS3qsAjUaj9PX1sXbt2mnlPoZhhA6JqB9DgMOHDz8vhKClpWVJMpnsC9Fak6ISIa+vOK1SROLNzXk9YizW47FjiCgeoGMizEaU9tkUhvdzzWdv4d+++QS9x8fpSTQwsvt12jevBlOgxkv4FKUa6W5HNoziKDSkDQ+1nGtKRSu+PgIfK/ApYxCAzFEeP4nRf4bJZ15mbilLg5AMnh1jcmSSrC845XgYPcu4+U9uAlE6FwSq0JQoAQIvgJguaEw31tzjkK+EgyiEIBqNMjg4KHVdrw2YEIIjR46wdevWWvwqlUrtCAcyNCfFYpHx8XEsy5KGYZDNZkmlUjeFHCvMxW3dupVdu3ZhGIacM2eOCPmG7/vous7Bgwfp6emhqanpBYCOjg4RjUbluXPnxtrb20WY1a+iUj8gwuuwbZs9e/awatUq0un0Ds/zaG5uFslkUo6MjDycTCZ3GIZBb2/vd/L5PO3t7eOhE6AoSms0Gq2V84TnG/4WOhC2bVMulzl16pSMxWK0tbWJWCyGbdv09PQseeSRR3odx+nduHGjCE3/h7d5E4AhMBrTx4QRrXSMEx4eNhC9jMb5pFZeRrl1AZd97pP0ZuG1t09w7vBJrDcOwN63YfBX+Oeeg+yvRvAPSeiX9sFfygP//K3XeOMl6HsNzr+GWn4dgz3AW+C9iTmxC79/Ny3OFExOkB+exEDBtRXyjofZmWT99g2kL5wLRh4RWNIgwEBB9TyQAZNjg/iuUyO79RMogyDA8zxisVgtgBeW6qqqyvj4OIlEouaxhTNzgTB1Qjwep6mpqbWpqemmakpiSYhOvu9jWRaxWIzLLruMvXv3curUKVkul2sBVdu2iUajZLPZWoK6UCjclUwmaW5urnEix3EIggDDMNYpilI7D0VRaGxsZHh4mFwud1eYugkJeHidoZkLjzs2Ntaze/fusampqRvDiHuYNwylfrZNLBajpaVlbiqVujp0aoQQNDU19W3fvp18Ps/bb78tC1Vn4UMVSgIuEg+FsAOiVrXrPvrLqI3tNC8kMm8V6WVrueZzF3EuB4cPDXLs9f1MvrEP69VX8Pa9ztTOn2HtfArOHMLMDpPdtZMjP9xB4Wf/Abt+AUfehLMH4PxhOH0UcWYQfXCC8/t7OX/iDJ5rYyZ1xvIuWgzWLJvNykWzYeAk5DIIIXEcG8d30QwNUDA1/TfmxtWbPYDOzk6RSqW+ECqS7/ts2LCB06dPMzQ0JKv8oyeXy90RoptlWTQ0NJBKpWhvbx+PRCJPxWIx8vn8/SF5D13tbDbL7NmzxdVXX33166+/XvM28/n8veEEgb6+PqampmQ1pPFgLpejubm5lh6xLGtrdZu9+Xz+3mKxeHGIcIsWLWJoaAjf9/vD3JrrunR2dorwoZkxY8bXEokEhw4dkgDJZLKvWi8+HiJRWC9VLpentSWAiueaTqfPSilLUsraun19fbKrq0vMmDGDdDpdc04+soOdH1Q0WNQSyApg4Ac+QhGjUjSjtq8gpauk22YSjyZ59FvPkzo+hXs+w8zmJKmGSVRlimzpKCOZFzADlY7zwzTlDWR+DEZbYDwLqSTkHfzT5xnaf5Lh40OYIk6pDFNWgKPbmLNgzbpmYlgc/9GjnLBNLviz/0HT9vmokSgSvRL+tCV5y0fXTXK5XE9jY2Nf6EXVUhapFK+++qr0PI9Nmzbt0HW9lusyTVP29vZiGIb0PI/ly5cvSafTVBHoxng8zsDAAOl0mmKx2DJv3jyKxWItflQqlcIJDsTjcYQQL2zbto2RkRGqN/UB3/dZsGCBuOqqq+Sbb77JjBkzZLlc5pZbbhGmadY8P1VV53Z0dNDb20skErm/q6uLeDwuVFVl6dKlQlVVuXPnzie7uirB4m3btn25fpawYRgPXHXVVfcPDAzwy1/+UpqmyZw5c0in07vDcEixWGyZP39+bUp6iOrhRIU33nhDaprG+vXra2U4mUyGnTt3ykQiQXt7ey208hE9Nt9rjOrj4SPRCWdhgCr8CobJrFTFMGSOQ+YUp198ibf+4xX8cy6Lmw1azASajBBX4ng5j9JoDiMIaG9rpOQXsYVFQTqUpU/gqwSOCiWFcgCjbhElIQmEZM48hSUr5oPUONE3wnAhwrKrP0Pjtj+CZauFrRt4QkUAJpVeoGF1SxhwrI83wXsBvvC77/u1ZHKhUCASiVAsFu9IpVI7hBBY1fRHmEANpVwuT5sGHsZupJT3apr2QBhOCD2q93OV0LxpmjaN14ShiLCaMkSmEGnD9cIZOiFChhLmMkNTFca4wnhbffwoDAXUj0v9ZNQw7BEGNkNUfz83/XCFktSaLAWKxMMnQEOVoOND4INiQFAGNS/z4wdJtpTh7HGyvWP8+j9f4K3/eptlTRrzIglafIWZWoogV8Yt+pWwkQpO4IHq4qkBGd9mwvYpCEEpIRgyApasSHPhwtmYqQYYznJ47zGsGctYes2fErvkJmiZU+larYEtwjYZDjoKgR9AIKZNrw75UhjzqZ/sGRL4crlMLBb7rb0L6htThCQ+NHfvn7cXhiRCHhSJRH7jpoa/h+aqfjJFeINDEx7ur75KwXXdGicEppmvkJCH9VzheYVjUK+E9b0SgNrE0Pp91TsHVe8X+KguwJIKcQoAAzwBHgEqXkWhfA1cHXRwgzy6XpCudwJdWuDoUJRk3tjLYw8+SOHIELMFLElAq26QMtIUshUS5wcOgeJjKzDmQ8GAyJwE6YUzWfmpDaD6MFFk5M0jjJzJE2lfyqJbPw8rN0NipvA0hcABI1Jp6FrpaWWjECADHUV570mrfwrff3NhenCyPmJcLBZr3la4j/q+AWEgsF4xwqhzfbC0Wj9EJBKZpqyhwoSf9emg+oBq/Tl9UBui+m4q9Wme8B7XK1h4/HDb9wd3w23rxyREyvfPPQzFdd2PUKggeC90roCnQoCLinWxSjBJoB/Gr+aYNBdPlLd6FJ5XsVFxUGQAZYfgzDHO7HmJ02/uxDl9nJQDjSrEhIIuAhQDjBQYLSaRGc3oM2dA60yIJWBkhIkzo5wf8JCxObQvv5S2NZfA7J4OzPQwqvJeY7E6REWzQQmoGL+P+5X/PuUjECqomDVZ7RleU6jiEhV/EKmvw0+8AgpoYOMTECBxULBUA9dTAPwCFE7D2DEYPQET5/FGx3Eyk+iKi276EPchKrAVlYKvkCtreLaCN14mleikoWM98fkXwNw1kOoQCB3fC1Cj1d5Oolr9G7YqVzxQZJVEfaxQv0/56Mb30gf0ysMvKr8JSqjYyco6sTxUGoyFMVQBaDiVvppl/1JEeSdyBMpD4JyH8jiUJqE4iedk8NwsRWuSomXhOQYySKEzA6k0MnfpakjNguYuiLQtIUj1gQIq+Cq4ePgVRb5UopQFaspAecEMlIqpVvm4NeLvWT4ybBB20w0I74sCmEiCdeAdAT8fVO2MWm09XemTYIA0wORlREQglCTRaA7agFKl36afR7PG0bwiEa9IsweQAq0VtJlgtkCkEdToMoR+JJA6whO1br8VD1TDR14k8cYC/EnwUNAwhc7HyPSHkY/sAvwe6nhVZdGqhXgustqNHlRUopUuvGG4qooOVsXmoeOiSfdaCEYRIgGyKAP7TSHLIL3KkQRV82qCiG9BRHfhVmt7hUNlSrAKVCvpZPWlRUrFWQAbA/eTGuhI9eVK41a9UnD+sfze5KP7lFe/G1RqZgiqLrIS8l8bQYAqzUpJSV3DNqmBVdveR/OqOKdqODX3vtoD3QM8p9p4VcXWKtOmNKi9bgNRMW8CDSVQp725SiqVnVRKhMMXCClUXnX0sUL9PuUjR7tSY179Jqn9KdUXCKmYlVcKycJmKABBxSPUAhwq65gBaIGseF2qC8LGw8PCX1L0mVuqog2qUWmYqSn4uLi4VxW8MkXp4wrw0UDqBIGHr9ig2qC4ID2EB8LVwIuCjOMQxcac9lq2j+X3Ix854iJcQYYwEFQsEBUnioAQHkAEmxGV5RVTGWAoVYUMRPUdZpWXpalIDNReU6Vfe58jFiBRCFAIfhHRNHRFrfFqRShoSuWtWBK3YgqFXz2Pyjp1ev/xO1/+APL/AVCiVMPqSkX+AAAAAElFTkSuQmCC" class="nav-logo-img" alt="HonorVet Technologies"></a>
+  <div class="nav-divider"></div>
+  <div class="nav-title">FACILITY TYPES &mdash; HEALTHCARE RECRUITMENT TRAINING</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#acutecare">Acute Care</a>
+    <a href="#trauma">Trauma</a>
+    <a href="#ltach">LTACH</a>
+    <a href="#ltc">LTC</a>
+    <a href="#other">Other Facilities</a>
+    <a href="#where">Where Are These?</a>
+    <a href="#matrix">Matrix</a>
+    <a href="#emr">EMR Systems</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#cert">Certificate</a>
+  </div>
+</nav>
+
+<div class="prog-panel" id="progPanel">
+  <div class="prog-panel-header" onclick="toggleProgress()">
+    <h4>&#9889; PROGRESS</h4>
+    <button class="prog-toggle">&#8249;</button>
+  </div>
+  <div class="prog-mini-score" id="miniScore">0 pts</div>
+  <div class="prog-body">
+    <div class="pitem"><div class="pdot active" id="pd-overview"></div>Overview</div>
+    <div class="pitem"><div class="pdot" id="pd-acutecare"></div>Acute Care Hospitals</div>
+    <div class="pitem"><div class="pdot" id="pd-trauma"></div>Trauma Centers</div>
+    <div class="pitem"><div class="pdot" id="pd-ltach"></div>LTACH (2026 Updates)</div>
+    <div class="pitem"><div class="pdot" id="pd-ltc"></div>Long-Term Care (LTC)</div>
+    <div class="pitem"><div class="pdot" id="pd-other"></div>Other Facilities</div>
+    <div class="pitem"><div class="pdot" id="pd-where"></div>Where Are These?</div>
+    <div class="pitem"><div class="pdot" id="pd-flashcards"></div>Flashcards</div>
+    <div class="pitem"><div class="pdot" id="pd-emr"></div>EMR Systems</div>
+    <div class="pitem"><div class="pdot" id="pd-checklist"></div>Checklist</div>
+    <div class="pitem"><div class="pdot" id="pd-quiz"></div>Quiz</div>
+    <div class="pitem"><div class="pdot" id="pd-match"></div>Match Game</div>
+    <div class="score-display">
+      <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;letter-spacing:1px;">SCORE</div>
+      <div class="score-num" id="totalScore">0</div>
+      <div style="font-size:0.62rem;color:var(--muted);">points</div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div style="display:flex;align-items:center;justify-content:center;margin-bottom:22px;animation:fadeUp .5s ease both;">
+    <img src="data:image/png;base64,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" alt="HonorVet Technologies" style="height:68px;width:auto;object-fit:contain;max-width:320px;">
+  </div>
+  <div class="hero-tag">// HEALTHCARE RECRUITMENT TRAINING &mdash; MODULE 02 &mdash; 2026 EDITION</div>
+  <h1 class="hero-h1">US Healthcare<br><span class="g">Facility Types</span></h1>
+  <p class="hero-sub">Acute Care. LTACH. Long-Term Care. Teaching Hospitals. VA Medical Centers. Know every facility type, its patient population, staffing requirements, and exactly where these facilities operate across the US &mdash; updated for 2026.</p>
+  <div class="hero-btns">
+    <a href="#overview" class="btn btn-primary">Start Learning &rarr;</a>
+    <a href="#quiz" class="btn btn-ghost">Jump to Quiz</a>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-top:20px;animation:fadeUp .7s .5s ease both;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--grey);"><span class="live-dot"></span>Updated for 2026 Regulations</div>
+    <div style="width:1px;height:14px;background:#E0E0E0;"></div>
+    <div style="font-size:0.75rem;color:var(--grey);">&#127891; Certificate on Completion</div>
+    <div style="width:1px;height:14px;background:#E0E0E0;"></div>
+    <div style="font-size:0.75rem;color:var(--grey);">&#9889; Progress Tracked</div>
+  </div>
+  <div class="hero-kpis">
+    <div class="kpi"><span class="num">6,200+</span><span class="lbl">US HOSPITALS</span></div>
+    <div class="kpi"><span class="num">~420</span><span class="lbl">LTACH FACILITIES</span></div>
+    <div class="kpi"><span class="num">15,600+</span><span class="lbl">LTC / NURSING HOMES</span></div>
+    <div class="kpi"><span class="num">1,700</span><span class="lbl">CRITICAL ACCESS</span></div>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));opacity:0.5;"></div>
+</section>
+
+<!-- CH 01: OVERVIEW -->
+<section id="overview">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 01</span>
+    <h2>The Big Picture — How US Healthcare Is Organized</h2>
+    <div class="bar"></div>
+    <p>Before you place a single candidate, you need to understand the three main pillars of US healthcare. Think of them as three different "worlds" — each with different patients, different staff, and different staffing needs.</p>
+  </div>
+  <div class="info-row sr">
+    <div class="info-box"><span class="ic">🏥</span><span class="iv">Acute Care</span><span class="il">Regular hospitals — where patients go for emergencies, surgery, and short-term illness</span></div>
+    <div class="info-box"><span class="ic">⚕️</span><span class="iv">LTACH</span><span class="il">Specialized hospitals for very sick patients who need longer care after leaving a regular hospital</span></div>
+    <div class="info-box"><span class="ic">🏡</span><span class="iv">LTC</span><span class="il">Nursing homes — where patients live long-term when they can no longer care for themselves</span></div>
+    <div class="info-box"><span class="ic">🚑</span><span class="iv">Trauma</span><span class="il">Special levels (I, II, III) inside acute care hospitals that handle accident and injury victims</span></div>
+    <div class="info-box"><span class="ic">🎖️</span><span class="iv">VA</span><span class="il">Government hospitals serving military veterans — HonorVet's most important client type</span></div>
+  </div>
+
+  <!-- PATIENT JOURNEY VISUAL -->
+  <div class="story sr mt">
+    <div class="story-eye">📖 REAL EXAMPLE — HOW ONE PATIENT MOVES THROUGH THE SYSTEM</div>
+    <h3>One Patient. Four Facilities. Your Job Openings at Every Step.</h3>
+    <p>Here's why understanding facility types matters. When a patient gets seriously injured or ill, they don't just go to one place — they move through the healthcare system. <strong>Each stop needs staff. That staff needs to come from somewhere. That's you.</strong></p>
+    <p><strong>Step 1 — Acute Care Hospital:</strong> Patient arrives at the emergency room. Nurses, doctors, and techs stabilize them. They might spend a week in the ICU after surgery. <em>Your placements: ER Nurse, ICU Nurse, OR Tech.</em></p>
+    <p><strong>Step 2 — LTACH:</strong> Patient improves but still needs daily medical treatment and a ventilator to breathe. They're too complex for a nursing home but don't need a full hospital. They go to an LTACH for a few weeks. <em>Your placements: ICU-trained Nurse, Respiratory Therapist.</em></p>
+    <p><strong>Step 3 — Rehab Hospital (IRF):</strong> Patient is off the ventilator and needs physical therapy, occupational therapy, and speech therapy daily to regain function. <em>Your placements: PT, OT, Speech Therapist.</em></p>
+    <p><strong>Step 4 — LTC / Nursing Home:</strong> Patient is stable but needs 24-hour nursing care and help with daily activities (eating, dressing, bathing). They may stay here long-term. <em>Your placements: RN, LPN, CNA.</em></p>
+    <div class="callout">🏆 <strong>Key takeaway:</strong> One patient's journey creates staffing needs across 4 different facility types. When you build relationships with hospitals, ask if they have a rehab center, nursing home, or LTACH in their network — that's 4x the placement opportunities.</div>
+  </div>
+
+  <!-- PATIENT JOURNEY FLOW DIAGRAM -->
+  <div class="sr mt" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 24px;box-shadow:var(--shadow);">
+    <div style="font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:3px;color:var(--accent);margin-bottom:18px;text-align:center;">THE CARE CONTINUUM — PATIENT FLOW &amp; YOUR PLACEMENTS</div>
+    <div style="display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:8px;">
+      <div style="flex:1;min-width:150px;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#EE1A0F,#c9150b);display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 16px rgba(238,26,15,0.3);margin-bottom:10px;">🚨</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:0.82rem;color:var(--charcoal);text-align:center;margin-bottom:4px;">Acute Care</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.6rem;color:var(--accent);margin-bottom:8px;">ENTRY POINT</div>
+        <div style="background:#FFF5F2;border:1px solid rgba(238,26,15,0.15);border-radius:8px;padding:10px;width:100%;font-size:0.72rem;color:var(--grey);line-height:1.6;text-align:center;">
+          <div style="font-weight:700;color:var(--charcoal);margin-bottom:4px;">Avg Stay: 4–5 days</div>
+          Emergency → Surgery → Recovery
+          <div style="margin-top:6px;padding-top:6px;border-top:1px dashed #E0E0E0;font-size:0.66rem;color:var(--accent);font-weight:600;">Your roles:<br>ED RN · ICU RN · RT · OR Tech</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 8px;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 16h20M20 10l6 6-6 6" stroke="#EE1A0F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="flex:1;min-width:150px;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1B5E8A,#0D2D4A);display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 16px rgba(27,94,138,0.3);margin-bottom:10px;">⚕️</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:0.82rem;color:var(--charcoal);text-align:center;margin-bottom:4px;">LTACH</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.6rem;color:var(--blue);margin-bottom:8px;">COMPLEX CARE</div>
+        <div style="background:#F2F8FF;border:1px solid rgba(27,94,138,0.15);border-radius:8px;padding:10px;width:100%;font-size:0.72rem;color:var(--grey);line-height:1.6;text-align:center;">
+          <div style="font-weight:700;color:var(--charcoal);margin-bottom:4px;">Avg Stay: 25+ days</div>
+          Breathing support · Wound care
+          <div style="margin-top:6px;padding-top:6px;border-top:1px dashed #E0E0E0;font-size:0.66rem;color:var(--blue);font-weight:600;">Your roles:<br>Critical Care RN · RT · WOCN</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 8px;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 16h20M20 10l6 6-6 6" stroke="#27AE60" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="flex:1;min-width:150px;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#27AE60,#1A7A35);display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 16px rgba(39,174,96,0.3);margin-bottom:10px;">♿</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:0.82rem;color:var(--charcoal);text-align:center;margin-bottom:4px;">Rehab (IRF)</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.6rem;color:var(--green);margin-bottom:8px;">RECOVERY</div>
+        <div style="background:#F0FFF4;border:1px solid rgba(39,174,96,0.15);border-radius:8px;padding:10px;width:100%;font-size:0.72rem;color:var(--grey);line-height:1.6;text-align:center;">
+          <div style="font-weight:700;color:var(--charcoal);margin-bottom:4px;">Avg Stay: 12–14 days</div>
+          Daily therapy to regain function
+          <div style="margin-top:6px;padding-top:6px;border-top:1px dashed #E0E0E0;font-size:0.66rem;color:var(--green);font-weight:600;">Your roles:<br>PT · OT · SLP · Rehab RN</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;padding:0 8px;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 16h20M20 10l6 6-6 6" stroke="#FF9000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="flex:1;min-width:150px;display:flex;flex-direction:column;align-items:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#FF9000,#c07000);display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 16px rgba(255,144,0,0.3);margin-bottom:10px;">🏡</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:0.82rem;color:var(--charcoal);text-align:center;margin-bottom:4px;">LTC / SNF</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.6rem;color:#C07000;margin-bottom:8px;">LONG-TERM</div>
+        <div style="background:#FFF9EC;border:1px solid rgba(255,144,0,0.15);border-radius:8px;padding:10px;width:100%;font-size:0.72rem;color:var(--grey);line-height:1.6;text-align:center;">
+          <div style="font-weight:700;color:var(--charcoal);margin-bottom:4px;">Avg Stay: 30–90+ days</div>
+          Help with daily living + nursing care
+          <div style="margin-top:6px;padding-top:6px;border-top:1px dashed #E0E0E0;font-size:0.66rem;color:#C07000;font-weight:600;">Your roles:<br>RN · LPN · CNA · PT · OT</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;text-align:center;font-size:0.72rem;color:var(--muted);font-style:italic;">Not every patient reaches every stop — but every stop is a placement opportunity.</div>
+  </div>
+
+  <div class="grid g2 sr mt">
+    <div class="card"><span class="card-ico">🏥</span><h3>Goal 1: Know the Facility Types</h3><p>By the end of this module, you'll be able to name every major US healthcare facility, explain what it does, and understand what kinds of patients and staff are there.</p><span class="tag-badge b-red">Foundation</span></div>
+    <div class="card"><span class="card-ico">👤</span><h3>Goal 2: Match Candidates to Facilities</h3><p>You'll learn which clinical roles belong at which facility — so you never submit the wrong candidate to the wrong place.</p><span class="tag-badge b-org">Placement Skill</span></div>
+    <div class="card"><span class="card-ico">💬</span><h3>Goal 3: Talk the Talk</h3><p>You'll learn enough clinical vocabulary to sound confident on calls with both candidates and hospital clients — without needing a nursing degree.</p><span class="tag-badge b-grn">Communication</span></div>
+    <div class="card"><span class="card-ico">💻</span><h3>Goal 4: Know the Tech</h3><p>You'll learn the EMR (computer systems) that nurses use at each facility type — and how to screen for them on every call.</p><span class="tag-badge b-blu">Technology</span></div>
+  </div>
+</section>
+
+<!-- CH 02: ACUTE CARE -->
+<section id="acutecare">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 02</span>
+    <h2>Acute Care Hospitals</h2>
+    <div class="bar"></div>
+    <p>The most common type of healthcare facility — and where most of your placements will happen. Think of acute care as the "main hospital" that most people picture when they hear the word "hospital."</p>
+  </div>
+
+  <div class="story sr">
+    <div class="story-eye">🏥 WHAT IS AN ACUTE CARE HOSPITAL?</div>
+    <h3>In Simple Terms</h3>
+    <p>An acute care hospital is where people go when they have a medical emergency, need surgery, or have a serious illness that needs immediate treatment. The goal is always the same: <strong>treat the patient and send them home (or to the next level of care) as quickly as safely possible.</strong></p>
+    <p>Think of it in three phases: the patient arrives through the <strong>Emergency Department (ER)</strong>, gets treated and possibly admitted to a hospital floor or the <strong>ICU</strong> (Intensive Care Unit — for the sickest patients), then when they're stable enough, they either go home or move to a rehab center, nursing home, or LTACH.</p>
+    <div class="callout blue">💡 <strong>Average stay:</strong> Most patients stay 3–5 days in an acute care hospital. The hospital gets paid based on the patient's diagnosis — so the goal is always to treat efficiently and discharge safely.</div>
+  </div>
+
+  <div class="acc sr mt">
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">🏢 What's Inside a Hospital? The Different Units <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>Hospitals aren't one big room — they're divided into specialized units. As a recruiter, you'll hear these unit names constantly. Here's what each one means:</p>
+        <ul>
+          <li><strong>Emergency Department (ED / ER):</strong> Where patients arrive for urgent care. Nurses here see everything — from broken bones to heart attacks. Very fast-paced. Needs nurses who can multitask and stay calm under pressure.</li>
+          <li><strong>ICU (Intensive Care Unit):</strong> The unit for the sickest patients who need one-on-one or one-on-two nursing care. Patients here are often on breathing machines (ventilators) or heart monitors. ICU nurses are the highest-paid nurses in hospitals.</li>
+          <li><strong>Step-Down / Telemetry (Tele):</strong> A "middle ground" between ICU and a regular floor. Patients here are improving but still need heart monitoring. Think of it as the ICU's waiting room — patients come here before going to a regular floor.</li>
+          <li><strong>Medical-Surgical (Med-Surg):</strong> The most common hospital unit. General medical patients — someone recovering from surgery, a patient with pneumonia, a diabetic patient getting their blood sugar controlled. This is the highest-volume placement area for recruiters.</li>
+          <li><strong>Operating Room (OR):</strong> Where surgeries happen. Needs surgical nurses (called Circulating RNs) and Surgical Techs (CSTs) who hand instruments to surgeons.</li>
+          <li><strong>Labor &amp; Delivery (L&amp;D):</strong> Where babies are born. Specialized nurses who support mothers during childbirth. Separate from regular nursing — requires specific training and certifications.</li>
+        </ul>
+        <div class="callout green">✅ <strong>New recruiter tip:</strong> When a hospital sends you a job order, always ask "What unit is this for?" — ICU, Med-Surg, ER, Tele, OR, and L&D are all very different jobs, even if the title says "Registered Nurse."</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">👤 Who Works in Acute Care? The Key Roles <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>Here are the clinical roles you'll be placing most often in acute care hospitals:</p>
+        <ul>
+          <li><strong>Registered Nurse (RN):</strong> The core of hospital staffing. RNs assess patients, give medications, coordinate care, and communicate with doctors. Must have a nursing license. Most travel contracts are for RNs.</li>
+          <li><strong>Licensed Practical Nurse (LPN / LVN):</strong> A step below RN — does many of the same hands-on tasks but with more limited scope. Less common in hospitals, more common in nursing homes and clinics.</li>
+          <li><strong>Certified Nursing Assistant (CNA):</strong> Helps patients with basic needs — bathing, feeding, turning in bed, taking vital signs. Works under RN supervision. Common in hospitals and nursing homes.</li>
+          <li><strong>Respiratory Therapist (RT / RRT):</strong> Specialist who manages patients' breathing — ventilators, oxygen therapy, breathing treatments. In high demand at hospitals with ICUs and LTACHs.</li>
+          <li><strong>Surgical Tech (CST / ST):</strong> Assists in operating rooms — sets up surgical equipment, hands instruments to surgeons. Needs OR experience.</li>
+          <li><strong>Hospitalist (MD/DO):</strong> A doctor whose entire job is managing admitted hospital patients. Common locum tenens (temporary doctor) placement role.</li>
+        </ul>
+        <div class="callout">📋 <strong>What to ask every nursing candidate:</strong> "What unit do you work on? ICU, Med-Surg, ER, Tele?" This one question tells you almost everything about where they can be placed.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">💰 What Do These Roles Pay? (Bill Rate Basics) <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>As a recruiter, you'll talk about "bill rates" — what the hospital pays the agency per hour for each clinician. Here are typical ranges to know:</p>
+        <ul>
+          <li><strong>ICU Nurse:</strong> $90–$135/hr — highest-paid nursing role. The sicker the patient, the higher the rate.</li>
+          <li><strong>ER Nurse:</strong> $75–$110/hr — fast-paced, high-skill, well paid.</li>
+          <li><strong>Med-Surg Nurse:</strong> $55–$85/hr — the most common placement, steady volume.</li>
+          <li><strong>Surgical Tech:</strong> $45–$70/hr — specialist role, good demand.</li>
+          <li><strong>Respiratory Therapist:</strong> $55–$85/hr — in shortage nationally, especially for ICU and LTACH.</li>
+        </ul>
+        <div class="callout warn">⚠️ <strong>Remember:</strong> The bill rate is what the hospital pays the agency. The candidate's take-home pay is different — it's a portion of the bill rate. Never quote the bill rate to a candidate; quote their pay package.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CH 03: TRAUMA -->
+<section id="trauma">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 03</span>
+    <h2>Trauma Centers — Levels I, II &amp; III</h2>
+    <div class="bar"></div>
+    <p>A "trauma center" is a special designation given to hospitals that are equipped to treat the most serious injuries — car accidents, gunshot wounds, falls, severe burns. Not every hospital is a trauma center. The levels tell you how equipped they are.</p>
+  </div>
+
+  <!-- TRAUMA LEVELS VISUAL — Tier cards, no SVG clipping -->
+  <div class="sr" style="display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto 32px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-lg);">
+
+    <!-- LEVEL I -->
+    <div style="background:linear-gradient(135deg,#EE1A0F,#c9150b);padding:22px 28px;display:flex;align-items:center;gap:20px;">
+      <div style="flex-shrink:0;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.35);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <span style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.15rem;color:#fff;line-height:1;">I</span>
+        <span style="font-family:'Courier New',monospace;font-size:0.5rem;color:rgba(255,255,255,0.75);letter-spacing:1px;margin-top:1px;">TRAUMA</span>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;color:#fff;letter-spacing:0.5px;margin-bottom:5px;">Level I Trauma Center</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">~300 in US</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">Major cities only</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">Surgeon in-hospital 24/7</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">Research required</span>
+        </div>
+      </div>
+      <div style="flex-shrink:0;text-align:right;">
+        <div style="font-family:'Courier New',monospace;font-weight:700;font-size:1rem;color:#fff;">$95–$135+</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.65rem;color:rgba(255,255,255,0.75);">RN bill rate / hr</div>
+      </div>
+    </div>
+
+    <!-- LEVEL II -->
+    <div style="background:linear-gradient(135deg,#FF9000,#e07800);padding:22px 28px;display:flex;align-items:center;gap:20px;">
+      <div style="flex-shrink:0;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.35);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <span style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.15rem;color:#fff;line-height:1;">II</span>
+        <span style="font-family:'Courier New',monospace;font-size:0.5rem;color:rgba(255,255,255,0.75);letter-spacing:1px;margin-top:1px;">TRAUMA</span>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;color:#fff;letter-spacing:0.5px;margin-bottom:5px;">Level II Trauma Center</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">~1,000+ in US</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">Suburban &amp; regional cities</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">Surgeon in-hospital 24/7</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(255,255,255,0.15);color:#fff;padding:3px 9px;border-radius:12px;white-space:nowrap;">No research required</span>
+        </div>
+      </div>
+      <div style="flex-shrink:0;text-align:right;">
+        <div style="font-family:'Courier New',monospace;font-weight:700;font-size:1rem;color:#fff;">$85–$115</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.65rem;color:rgba(255,255,255,0.75);">RN bill rate / hr</div>
+      </div>
+    </div>
+
+    <!-- LEVEL III -->
+    <div style="background:linear-gradient(135deg,#FDD826,#e8c000);padding:22px 28px;display:flex;align-items:center;gap:20px;">
+      <div style="flex-shrink:0;width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,0.08);border:2px solid rgba(0,0,0,0.15);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <span style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;color:#7A5500;line-height:1;">III</span>
+        <span style="font-family:'Courier New',monospace;font-size:0.5rem;color:#9A6800;letter-spacing:1px;margin-top:1px;">TRAUMA</span>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;color:#5A3D00;letter-spacing:0.5px;margin-bottom:5px;">Level III Trauma Center</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(0,0,0,0.08);color:#6B4600;padding:3px 9px;border-radius:12px;white-space:nowrap;">~2,000+ in US</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(0,0,0,0.08);color:#6B4600;padding:3px 9px;border-radius:12px;white-space:nowrap;">Smaller towns</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(0,0,0,0.08);color:#6B4600;padding:3px 9px;border-radius:12px;white-space:nowrap;">Surgeon on-call (30 min)</span>
+          <span style="font-family:'Courier New',monospace;font-size:0.68rem;background:rgba(0,0,0,0.08);color:#6B4600;padding:3px 9px;border-radius:12px;white-space:nowrap;">Stabilize &amp; transfer</span>
+        </div>
+      </div>
+      <div style="flex-shrink:0;text-align:right;">
+        <div style="font-family:'Courier New',monospace;font-weight:700;font-size:1rem;color:#5A3D00;">$60–$85</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.65rem;color:#8A6000;">RN bill rate / hr</div>
+      </div>
+    </div>
+
+    <!-- Footer bar -->
+    <div style="background:#231F20;padding:11px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <span style="font-family:'Courier New',monospace;font-size:0.65rem;color:rgba(255,255,255,0.5);letter-spacing:1px;">ACUITY: LEVEL I = HIGHEST &nbsp;→&nbsp; LEVEL III = MODERATE</span>
+      <span style="font-family:'Courier New',monospace;font-size:0.65rem;color:rgba(255,255,255,0.5);letter-spacing:1px;">BILL RATE: HIGHER ACUITY = HIGHER PAY</span>
+    </div>
+
+  </div>
+
+  <div class="grid g3 sr">
+    <div class="card" style="border-top:4px solid #EE1A0F;">
+      <span class="card-ico">🔴</span>
+      <h3>Level I Trauma Center</h3>
+      <p>The highest level. A surgeon is in the building 24 hours a day — not just on call, physically there. These hospitals must treat over 1,200 trauma patients a year and conduct medical research. Found only in major cities, usually attached to a university hospital.</p>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #F0F0F0;">
+        <div style="font-family:'Courier New',monospace;font-size:0.65rem;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px;">AS A RECRUITER, KNOW THIS</div>
+        <ul style="padding-left:0;list-style:none;font-size:0.79rem;color:var(--grey);display:flex;flex-direction:column;gap:4px;">
+          <li>→ Highest-paying trauma contracts</li>
+          <li>→ Needs experienced ICU and trauma nurses</li>
+          <li>→ Do not submit a new grad here</li>
+          <li>→ Always in large metro areas</li>
+        </ul>
+      </div>
+      <span class="tag-badge b-red">~300 in US</span>
+    </div>
+    <div class="card" style="border-top:4px solid #FF9000;">
+      <span class="card-ico">🟠</span>
+      <h3>Level II Trauma Center</h3>
+      <p>Very similar to Level I — a surgeon is also in the building 24/7 and they handle almost all trauma cases. The difference: no research requirement. More common than Level I, found in suburban and mid-size cities.</p>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #F0F0F0;">
+        <div style="font-family:'Courier New',monospace;font-size:0.65rem;letter-spacing:1.5px;color:#C07000;margin-bottom:6px;">AS A RECRUITER, KNOW THIS</div>
+        <ul style="padding-left:0;list-style:none;font-size:0.79rem;color:var(--grey);display:flex;flex-direction:column;gap:4px;">
+          <li>→ High-paying, but slightly less than Level I</li>
+          <li>→ Needs experienced ICU and ER nurses</li>
+          <li>→ Good market for per-diem and travel contracts</li>
+          <li>→ Found in suburbs and regional cities</li>
+        </ul>
+      </div>
+      <span class="tag-badge b-org">~1,000+ in US</span>
+    </div>
+    <div class="card" style="border-top:4px solid #FDD826;">
+      <span class="card-ico">🟡</span>
+      <h3>Level III Trauma Center</h3>
+      <p>The community-level trauma center. Their job is to stabilize the patient and transfer them to a Level I or II if the case is too complex. The surgeon doesn't have to be in the building — they just need to be reachable and able to arrive within 30 minutes.</p>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #F0F0F0;">
+        <div style="font-family:'Courier New',monospace;font-size:0.65rem;letter-spacing:1.5px;color:#8A6800;margin-bottom:6px;">AS A RECRUITER, KNOW THIS</div>
+        <ul style="padding-left:0;list-style:none;font-size:0.79rem;color:var(--grey);display:flex;flex-direction:column;gap:4px;">
+          <li>→ Good for newer travel nurses (lower complexity)</li>
+          <li>→ Found in smaller towns and rural areas</li>
+          <li>→ Less recruiter competition — build long-term relationships</li>
+          <li>→ Great entry point for your first hospital clients</li>
+        </ul>
+      </div>
+      <span class="tag-badge b-gld">~2,000+ in US</span>
+    </div>
+  </div>
+  <div class="callout warn sr mt">⚠️ <strong>Important rule:</strong> Trauma level is NOT the same as hospital size. A small community hospital can be a Level II. A large university hospital might not be trauma-designated at all. Always confirm the trauma level with the client before submitting a candidate who specializes in trauma.</div>
+</section>
+
+<!-- CH 04: LTACH -->
+<section id="ltach">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 04</span>
+    <h2>Long-Term Acute Care Hospital (LTACH)</h2>
+    <div class="bar"></div>
+    <p>Think of an LTACH as a hospital for patients who are too sick for a nursing home but don't need a full emergency hospital anymore. They need specialized medical care — just slower and for a longer period.</p>
+  </div>
+  <div class="story sr">
+    <div class="story-eye">⚕️ WHAT IS AN LTACH? IN PLAIN ENGLISH</div>
+    <h3>The "In-Between" Hospital</h3>
+    <p>Imagine a patient who had a major surgery, is recovering, but still needs a breathing machine (ventilator) to help them breathe. They don't need emergency surgery anymore — but they're not ready for a nursing home either. They go to an LTACH.</p>
+    <p>The key rule: <strong>patients at an LTACH must stay an average of 25 days or more.</strong> This is what makes it different from a regular hospital (where the average stay is 3–5 days). LTACHs partner with regular hospitals — when a hospital patient is stable enough to leave but still needs complex care, they transfer to the LTACH. This frees up the hospital's beds for new patients.</p>
+    <p><strong>Common conditions treated at LTACHs:</strong> Patients on breathing machines (ventilators), serious wounds that need daily dressing changes, severe infections, and patients who need multiple IV medications and 24/7 medical supervision.</p>
+    <div class="callout blue">💡 <strong>Recruiter tip:</strong> LTACHs need nurses with ICU experience — not brand-new nurses. The patients are complex, but the pace is slower than a trauma ICU. This makes LTACHs a great option for experienced ICU nurses who want less chaos but still challenging work.</div>
+  </div>
+  <div class="compare-strip sr">
+    <div class="compare-col left">
+      <h4 style="color:var(--accent);">🏥 Acute Care Hospital</h4>
+      <div class="sub" style="color:var(--accent);">SHORT-TERM STAY</div>
+      <ul>
+        <li>Treats emergencies and surgeries</li>
+        <li>Goal: treat quickly and discharge</li>
+        <li>Average stay: 4–5 days</li>
+        <li>Many nurses needed per shift</li>
+        <li>ER, ICU, OR, Med-Surg floors</li>
+        <li>Sends complex patients to LTACH</li>
+      </ul>
+    </div>
+    <div class="compare-col right">
+      <h4 style="color:var(--blue);">⚕️ LTACH</h4>
+      <div class="sub" style="color:var(--blue);">LONG-TERM STAY</div>
+      <ul>
+        <li>Treats complex patients post-hospital</li>
+        <li>Goal: manage complex conditions slowly</li>
+        <li>Average stay: 25+ days (required)</li>
+        <li>Fewer nurses, but highly skilled ones</li>
+        <li>Ventilator weaning, wound care, infections</li>
+        <li>Receives patients from acute care</li>
+      </ul>
+    </div>
+  </div>
+  <div class="acc sr mt">
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">👤 Who Works at an LTACH? <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <ul>
+          <li><strong>Critical Care / ICU Nurse (RN):</strong> The main nursing role. Must have experience working with very sick patients. Typically needs 1–2 years of ICU or step-down experience. Bill rate: $65–$90/hr.</li>
+          <li><strong>Respiratory Therapist (RT/RRT):</strong> Manages breathing machines and helps patients slowly breathe on their own again. This is the most in-demand and hardest-to-fill role at LTACHs nationally.</li>
+          <li><strong>Wound Care Nurse (WOCN):</strong> Specialist in treating serious wounds — pressure injuries, surgical wounds, diabetic wounds. In shortage at most LTACHs.</li>
+          <li><strong>Physical Therapist (PT) / Occupational Therapist (OT):</strong> Help patients regain strength and function while they're still medically fragile.</li>
+          <li><strong>Hospitalist Doctor:</strong> A physician who oversees all the patients daily. Often a locum tenens (temporary doctor) placement.</li>
+        </ul>
+        <div class="callout green">✅ <strong>Pitch to burned-out ICU nurses:</strong> "Same clinical complexity, but slower pace. You'll actually get to know your patients over weeks, not hours. Less chaos, same challenge." Many experienced travel nurses love LTACHs once they try them.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">📋 2026 Update — What Changed at LTACHs <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <ul>
+          <li><strong>Medicare pays LTACHs a little more in 2026 (+3%).</strong> This means facilities are financially stable and actively hiring — good news for your placements.</li>
+          <li><strong>Watch for LTACH closures in your market.</strong> When an LTACH closes, the patients have to go somewhere — usually creating urgent staffing needs at the partner acute care hospital. If you hear about a closure, call the local hospitals immediately.</li>
+          <li><strong>LTACHs are expanding their Social Work teams.</strong> Starting 2026, they need to document patients' social needs (housing, food, transportation) at admission. If you place Social Workers or Case Managers, LTACHs are a growing market.</li>
+        </ul>
+        <div class="callout">📌 <strong>Bottom line for a new recruiter:</strong> LTACH is a stable, growing placement market. Respiratory Therapists and Wound Care Nurses are your highest-demand roles here.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CH 05: LTC -->
+<section id="ltc">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 05</span>
+    <h2>Long-Term Care (LTC) — Nursing Homes &amp; Skilled Nursing</h2>
+    <div class="bar"></div>
+    <p>Long-Term Care is where patients live when they can no longer take care of themselves at home and don't need a hospital. Think of it as "a home with nurses" — 24-hour care for people with ongoing health needs.</p>
+  </div>
+  <div class="update-badge sr">2026 MAJOR CHANGE — LTC STAFFING RULE. HERE'S WHAT IT MEANS FOR YOU.</div>
+  <div class="story sr">
+    <div class="story-eye">🏡 WHAT IS LONG-TERM CARE? IN PLAIN ENGLISH</div>
+    <h3>Not a Hospital. Not a Hotel. Something In Between.</h3>
+    <p>LTC facilities (also called nursing homes, skilled nursing facilities, or SNFs) provide <strong>round-the-clock care for people who cannot safely live at home.</strong> This includes elderly people with dementia, stroke survivors who need ongoing therapy, people with Parkinson's disease, or anyone whose condition requires daily nursing supervision.</p>
+    <p>The key difference from a hospital: the goal isn't to "fix" the patient and send them home. Many LTC residents stay for months or years — this is their home. Staff help with <strong>daily activities of living (ADLs)</strong> — bathing, dressing, eating, using the bathroom, getting around. This is called "custodial care."</p>
+    <div class="callout">💡 <strong>Easy way to remember:</strong> Hospital = short-term, fix the problem. LTACH = medium-term, manage complex medical needs. LTC = long-term, help with daily life.</div>
+  </div>
+  <div class="grid g3 sr mt">
+    <div class="card"><span class="card-ico">🧓</span><h3>Who Are the Patients?</h3><p>Mostly older adults (65+), though LTC serves all ages. Common patients: someone with advanced dementia who can't live alone, a stroke survivor who needs ongoing care, a person with severe COPD who needs daily oxygen and nursing supervision.</p><span class="tag-badge b-red">Long-Term Residents</span></div>
+    <div class="card"><span class="card-ico">🏠</span><h3>Types of LTC Facilities</h3><p><strong>Nursing Homes:</strong> Traditional custodial care, mostly government-funded. <strong>Skilled Nursing Facilities (SNFs):</strong> Higher level — also do physical/occupational therapy for Medicare patients. <strong>Assisted Living:</strong> Less medical oversight, more residential. <strong>Memory Care:</strong> Specialized units for dementia patients.</p><span class="tag-badge b-org">Multiple Models</span></div>
+    <div class="card"><span class="card-ico">⚕️</span><h3>Who Works in LTC?</h3><p>Very different from a hospital. <strong>CNAs</strong> do most of the hands-on daily care. <strong>LPNs</strong> give medications and do clinical tasks. <strong>RNs</strong> manage the clinical oversight. <strong>PT/OT/SLP</strong> do rehabilitation. The ratio is much more CNA/LPN heavy than hospitals.</p><span class="tag-badge b-grn">Different Staff Mix</span></div>
+  </div>
+  <div class="acc sr mt">
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">📋 2026 Rule Change — What Happened &amp; What It Means for You <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <div class="callout gold">🔔 This is the biggest change in LTC in years. Know the basics before your first LTC client call.</div>
+        <p><strong>What changed:</strong> In 2024, a new law required nursing homes to have a Registered Nurse (RN) present 24 hours a day, 7 days a week. In December 2025, that law was repealed (cancelled). The rule now is: nursing homes need an RN on-site for at least 8 hours per day.</p>
+        <p><strong>What this means for recruiters:</strong></p>
+        <ul>
+          <li>Some nursing homes may try to reduce nursing staff — but the best facilities will keep strong staffing because it affects their quality ratings and reputation</li>
+          <li>The nursing shortage in LTC did NOT go away — facilities still struggle to find enough CNAs, LPNs, and RNs regardless of what the law says</li>
+          <li><strong>State laws vary</strong> — some states (like California and New York) have their own, stricter staffing rules. Always check the state before making promises to a client about staffing requirements</li>
+        </ul>
+        <div class="callout warn">⚠️ <strong>What to tell candidates who ask:</strong> "The federal minimum changed, but quality facilities still staff well above the minimum. Your job is safe — the demand for LTC nurses is not going away."</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">💰 LTC Roles &amp; What They Pay <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <ul>
+          <li><strong>CNA (Certified Nursing Assistant):</strong> The most common LTC role and the hardest to fill. CNAs do the heavy lifting — literally. They help patients bathe, dress, eat, and move. Travel bill rate: ~$28–$42/hr. Extremely high turnover — always in demand.</li>
+          <li><strong>LPN (Licensed Practical Nurse):</strong> Gives medications, does basic clinical assessments, supervises CNAs. Much more responsibility in LTC than in hospitals. Bill rate: $40–$65/hr.</li>
+          <li><strong>RN (Registered Nurse):</strong> Manages the clinical picture — assessments, care plan updates, physician communication. Bill rate: $60–$85/hr. The Director of Nursing (DON) at a facility must be an RN.</li>
+          <li><strong>PT / OT / SLP:</strong> Physical, Occupational, and Speech Therapists. Essential for Medicare-funded rehab stays (up to 100 days). Bill rate: $55–$75/hr.</li>
+        </ul>
+        <div class="callout green">✅ <strong>LTC is a volume game.</strong> Individual bill rates are lower than hospitals, but facilities always need staff and they need a lot of it. One nursing home system with 10 facilities can be a massive, reliable client.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">⭐ The Five-Star Rating System — Why It Matters <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>Every nursing home in the US gets a public star rating (1–5 stars) from the government. Families use this to choose where to place their loved ones. As a recruiter, you should check this before working with a new LTC client.</p>
+        <ul>
+          <li><strong>5-star facilities:</strong> Well-run, good reputation. Likely to maintain strong staffing and be good long-term clients. Harder to get contracts with, but worth it.</li>
+          <li><strong>3–4 star facilities:</strong> Average. Good volume clients, reasonable to work with.</li>
+          <li><strong>1–2 star facilities:</strong> May have compliance problems, poor management, or financial instability. Contracts may be short or unpaid. Approach with caution.</li>
+        </ul>
+        <div class="callout">🔍 <strong>How to check:</strong> Go to Medicare's "Care Compare" website and search any nursing home by name. The star rating is publicly available. Make this a habit before signing a new LTC client.</div>
+      </div>
+    </div>
+  </div>
+  <div class="visual-quote sr mt">
+    <p>"Long-term care is where the largest, most vulnerable patient population in America lives — and it's chronically understaffed. For a new recruiter, LTC is steady business. Learn these facilities well."</p>
+    <cite>&mdash; HonorVet Recruitment Training &mdash; Module 02</cite>
+  </div>
+</section>
+
+<!-- CH 06: OTHER FACILITIES -->
+<section id="other">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 06</span>
+    <h2>Other Facility Types You'll Encounter</h2>
+    <div class="bar"></div>
+    <p>Beyond hospitals, LTACHs, and nursing homes, there are several other facility types you'll see in job orders. Here's a quick introduction to each.</p>
+  </div>
+  <div class="acc sr">
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">🎓 Academic Medical Centers &amp; Teaching Hospitals — The Big Research Hospitals <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>An <strong>Academic Medical Center (AMC)</strong> is a hospital connected to a medical school — like Mayo Clinic, Johns Hopkins, or Cleveland Clinic. They treat the most complex cases in the country and also train doctors, nurses, and other healthcare workers.</p>
+        <p>A <strong>Teaching Hospital</strong> is any hospital where medical students and residents (doctors-in-training) are learning. They're affiliated with medical schools but may not have the same research focus as a full AMC.</p>
+        <ul>
+          <li><strong>What makes them different:</strong> More complex patients, higher credentialing requirements, longer onboarding process. Not ideal for newer travel nurses.</li>
+          <li><strong>What they pay:</strong> Premium rates — experienced specialty nurses can command $80–$120/hr.</li>
+          <li><strong>Recruiter tip:</strong> July is a surge month — new resident doctors start in July every year, creating a temporary gap in clinical coverage that hospitals fill with experienced travel staff.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">🏅 Magnet Hospitals — The "Gold Standard" for Nursing <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>A <strong>Magnet Hospital</strong> is a hospital that has earned a special award (from an organization called ANCC) for having excellent nursing standards. Only about 10% of US hospitals have Magnet status — roughly 600 facilities.</p>
+        <ul>
+          <li><strong>What it means for you:</strong> These hospitals often require nurses to have a Bachelor's degree in nursing (BSN). Always check if your candidate has a BSN before submitting to a Magnet hospital.</li>
+          <li><strong>Why candidates care:</strong> A Magnet placement looks great on a nurse's resume — it shows they worked at an elite nursing environment. Use this as a selling point when recruiting.</li>
+          <li><strong>Pay:</strong> $80–$110/hr for specialty nurses.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">🌾 Critical Access Hospitals (CAH) — Rural America's Lifeline <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>A <strong>Critical Access Hospital</strong> is a small hospital in a rural area — often the only hospital for 35+ miles. They can have no more than 25 beds and are specially funded by Medicare to stay open, because if they closed, the community would have no healthcare access.</p>
+        <ul>
+          <li><strong>There are ~1,700 CAHs in the US</strong> — mostly in the Midwest, South, and Mountain West.</li>
+          <li><strong>The nursing shortage here is severe</strong> — over 40% vacancy rates are common. These facilities desperately need staff.</li>
+          <li><strong>Recruiter advantage:</strong> Less competition from other agencies. These clients are loyal and grateful when you show up for them.</li>
+          <li><strong>Key pitch to candidates:</strong> Loan forgiveness programs — nurses who work in rural areas can get up to $50,000 of student loans forgiven. This is a powerful recruiting tool.</li>
+          <li><strong>What they need most:</strong> Generalist nurses who can work multiple floors, Family Medicine doctors, and Nurse Practitioners.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">🎖️ VA Medical Centers — HonorVet's Priority Market <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p>The US Department of Veterans Affairs operates <strong>170 hospitals (called VAMCs)</strong> across the country serving over 9 million military veterans. This is HonorVet's most strategic market — our company was founded to serve veterans, and our business certification (SDVOSB) gives us a competitive advantage in VA contracts.</p>
+        <ul>
+          <li><strong>What makes VA hospitals different:</strong> The patients are veterans. Clinicians need to understand military culture and veteran-specific health issues like PTSD, traumatic brain injury, and injuries related to combat or military service.</li>
+          <li><strong>What they need most:</strong> Mental health nurses and psychiatrists, primary care doctors and nurse practitioners, and specialists in brain injury and spinal cord injury.</li>
+          <li><strong>Our advantage:</strong> HonorVet is certified as a Service-Disabled Veteran-Owned Small Business (SDVOSB). The VA gives preference to companies like ours when awarding contracts. This is a real competitive edge — use it in every VA client conversation.</li>
+          <li><strong>EMR note:</strong> VA hospitals use Oracle Health (Cerner). Ask your candidates if they have Cerner experience.</li>
+        </ul>
+        <div class="callout" style="background:rgba(13,45,74,0.05);border-color:rgba(13,45,74,0.2);color:var(--navy);">🎖️ <strong>HonorVet mission:</strong> We prioritize placing veteran clinicians at VA facilities whenever possible. If you find a veteran nurse or doctor who wants to work with fellow veterans — this is your placement.</div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-btn" onclick="openAcc(this)">♿ Rehab Hospitals (IRF) &amp; Community Health Centers (FQHC) <span class="acc-chevron">▼</span></button>
+      <div class="acc-body">
+        <p><strong>Inpatient Rehabilitation Facility (IRF) — "Rehab Hospital":</strong> Where patients go to regain function after a major event (stroke, brain injury, hip fracture). They receive at least 3 hours of physical, occupational, or speech therapy every day. About 1,200 in the US. Main staffing needs: Physical Therapists, Occupational Therapists, Speech Therapists, and Rehab Nurses. Growing fast as the US population ages.</p>
+        <p><strong>Federally Qualified Health Center (FQHC) — "Community Clinic":</strong> Government-funded clinics in underserved neighborhoods and rural areas that serve patients regardless of their ability to pay. Think of them as the safety-net primary care for low-income communities. Main staffing needs: Nurse Practitioners, Physician Assistants, Family Medicine doctors, and mental health counselors. Many offer student loan repayment to attract providers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CH 07: WHERE ARE THESE? -->
+<section id="where">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 07</span>
+    <h2>Where Are These Facilities? — The Geography Basics</h2>
+    <div class="bar"></div>
+    <p>Knowing where different facility types are located helps you understand where your candidates need to go — and which markets are most in need. Here's a simple overview.</p>
+  </div>
+  <div class="geo-grid sr">
+    <div class="geo-card"><div class="geo-accent" style="background:linear-gradient(90deg,#EE1A0F,#FF9000);"></div><div class="geo-top"><div class="geo-icon" style="background:rgba(238,26,15,0.08);">🏥</div><div><div class="geo-count">~6,200</div><h4>Acute Care Hospitals</h4></div></div><p>In every state and most major cities. The more rural the area, the fewer hospitals — which is exactly why rural staffing is in crisis.</p><div class="geo-states">Most hospitals: TX, CA, FL, NY, OH, PA, IL.</div></div>
+    <div class="geo-card"><div class="geo-accent" style="background:linear-gradient(90deg,#EE1A0F,#c9150b);"></div><div class="geo-top"><div class="geo-icon" style="background:rgba(238,26,15,0.08);">🔴</div><div><div class="geo-count">~300</div><h4>Level I Trauma Centers</h4></div></div><p>Only in major cities — attached to large university or academic hospitals. If you're placing a trauma specialist, they're going to a major metro area.</p><div class="geo-states">NYC, Chicago, LA, Houston, Atlanta, Boston, Philadelphia.</div></div>
+    <div class="geo-card"><div class="geo-accent" style="background:linear-gradient(90deg,#1B5E8A,#0D2D4A);"></div><div class="geo-top"><div class="geo-icon" style="background:rgba(27,94,138,0.08);">⚕️</div><div><div class="geo-count">~420</div><h4>LTACH Facilities</h4></div></div><p>Not in every state — concentrated where large Medicare populations live. Texas has over 60 LTACHs alone. Often located inside or next to a regular hospital.</p><div class="geo-states">Highest concentration: TX, PA, OH, GA, FL, IN, LA.</div></div>
+    <div class="geo-card"><div class="geo-accent" style="background:linear-gradient(90deg,#27AE60,#1A7A35);"></div><div class="geo-top"><div class="geo-icon" style="background:rgba(39,174,96,0.08);">🏡</div><div><div class="geo-count">15,600+</div><h4>LTC / Nursing Homes</h4></div></div><p>The most widespread facility type — in virtually every community in the US, from big cities to tiny rural towns. Rural nursing homes face the worst staffing shortages.</p><div class="geo-states">Most facilities: FL, OH, PA, NY, TX, IL, CA.</div></div>
+    <div class="geo-card"><div class="geo-accent" style="background:linear-gradient(90deg,#FF9000,#EE1A0F);"></div><div class="geo-top"><div class="geo-icon" style="background:rgba(255,144,0,0.08);">🌾</div><div><div class="geo-count">~1,700</div><h4>Critical Access Hospitals</h4></div></div><p>Only in rural areas — by definition, they must be 35+ miles from the nearest other hospital. The Great Plains, Mountain West, and Deep South have the most CAHs.</p><div class="geo-states">Most CAHs: TX, KS, NE, IA, MN, MO, WI, GA, MS, KY.</div></div>
+    <div class="geo-card"><div class="geo-accent" style="background:linear-gradient(90deg,#0D2D4A,#1B5E8A);"></div><div class="geo-top"><div class="geo-icon" style="background:rgba(13,45,74,0.08);">🎖️</div><div><div class="geo-count">170</div><h4>VA Medical Centers</h4></div></div><p>In every US state plus DC and Puerto Rico. Distribution follows where veterans live — highest in CA, TX, FL, NY, PA. Rural VAMCs serve the largest geographic areas and are often the most short-staffed.</p><div class="geo-states">All 50 states. Largest systems: CA, TX, FL, NY, PA.</div></div>
+  </div>
+  <div class="callout info sr mt">💡 <strong>Simple rule:</strong> The more rural the location, the harder it is to find staff — and the more the facility needs you. Rural placements require housing stipends and lifestyle conversations, but they create loyal clients who will call you first every time.</div>
+</section>
+
+<!-- CH 08: MATRIX TABLE -->
+<section id="matrix">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 08</span>
+    <h2>Quick Reference — All Facility Types at a Glance</h2>
+    <div class="bar"></div>
+    <p>Use this table as your cheat sheet. When a job order comes in, look up the facility type to know who works there and what to expect.</p>
+  </div>
+  <div class="tbl-wrap sr">
+    <table>
+      <thead><tr><th>Facility Type</th><th>Avg Stay</th><th>Top Nursing Role</th><th>Key Allied / MD Role</th><th>RN Bill Rate</th><th>Where Found</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Level I Trauma</strong></td><td>4–7 days</td><td>ICU / Trauma RN</td><td>Trauma Surgeon</td><td>$95–$135+/hr</td><td>Major cities only</td></tr>
+        <tr><td><strong>Level II Trauma</strong></td><td>3–6 days</td><td>ICU / ER RN</td><td>General Surgeon</td><td>$85–$115/hr</td><td>Suburbs &amp; regional cities</td></tr>
+        <tr><td><strong>Level III Trauma</strong></td><td>2–4 days</td><td>ER / Med-Surg RN</td><td>ER Physician</td><td>$60–$85/hr</td><td>Smaller towns</td></tr>
+        <tr><td><strong>Academic Medical Center</strong></td><td>5–10 days</td><td>Specialty RN</td><td>Sub-Specialist MD</td><td>$80–$120/hr</td><td>Major university cities</td></tr>
+        <tr><td><strong>Teaching Hospital</strong></td><td>4–7 days</td><td>Charge RN / Preceptor</td><td>Attending Physician</td><td>$75–$105/hr</td><td>Mid-large cities</td></tr>
+        <tr><td><strong>Magnet Hospital</strong></td><td>3–6 days</td><td>BSN-level Specialty RN</td><td>CNS / NP</td><td>$80–$110/hr</td><td>Urban / suburban</td></tr>
+        <tr><td><strong>Community Hospital</strong></td><td>3–5 days</td><td>Med-Surg / Tele RN</td><td>Hospitalist MD</td><td>$55–$85/hr</td><td>Everywhere</td></tr>
+        <tr><td><strong>LTACH</strong></td><td>25+ days</td><td>Critical Care RN</td><td>Respiratory Therapist</td><td>$65–$90/hr</td><td>Mid-large cities (TX, OH, PA)</td></tr>
+        <tr><td><strong>LTC / SNF</strong></td><td>30–90+ days</td><td>LPN / RN</td><td>CNA, PT, OT, SLP</td><td>$60–$85/hr</td><td>Everywhere</td></tr>
+        <tr><td><strong>Critical Access Hospital</strong></td><td>2–3 days</td><td>Generalist RN</td><td>Family Medicine MD / NP</td><td>$60–$90/hr</td><td>Rural areas only</td></tr>
+        <tr><td><strong>VA Medical Center</strong></td><td>Varies</td><td>Psych / Primary Care RN</td><td>Psychiatrist / Family MD</td><td>$75–$110/hr</td><td>All 50 states</td></tr>
+        <tr><td><strong>Rehab Hospital (IRF)</strong></td><td>12–14 days</td><td>Rehab RN</td><td>PT / OT / SLP</td><td>$55–$80/hr</td><td>Urban &amp; suburban</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RN BILL RATE VISUAL -->
+  <div class="sr mt2" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 24px;box-shadow:var(--shadow);">
+    <div style="font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:3px;color:var(--accent);margin-bottom:6px;text-align:center;">RN BILL RATE BENCHMARKS BY FACILITY TYPE — 2026</div>
+    <div style="font-size:0.72rem;color:var(--muted);text-align:center;margin-bottom:20px;">Typical travel RN contract range (market benchmarks)</div>
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:720px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">Level I Trauma ICU</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:95%;background:linear-gradient(90deg,#EE1A0F,#FF5500);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$95–$135+</span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">VA Medical Center</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:86%;background:linear-gradient(90deg,#0D2D4A,#1B5E8A);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$75–$110</span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">Academic Med Ctr</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:89%;background:linear-gradient(90deg,#1B5E8A,#0099CC);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$80–$120</span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">LTACH</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:73%;background:linear-gradient(90deg,#FF9000,#e07800);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$65–$90</span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">Critical Access CAH</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:70%;background:linear-gradient(90deg,#27AE60,#1A8040);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$60–$90</span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">Community Hospital</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:64%;background:linear-gradient(90deg,#808286,#555);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$55–$85</span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:130px;font-size:0.73rem;font-weight:600;color:var(--charcoal);text-align:right;flex-shrink:0;">LTC / SNF (RN)</div><div style="flex:1;height:26px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:60%;background:linear-gradient(90deg,#AAAAAA,#888);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.68rem;font-weight:700;">$60–$85</span></div></div></div>
+    </div>
+    <div style="margin-top:14px;text-align:center;font-size:0.68rem;color:var(--muted);">Higher acuity = higher bill rate. Volume market = consistent revenue stream.</div>
+  </div>
+</section>
+
+<!-- CH 09: EMR SYSTEMS -->
+<section id="emr">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 09</span>
+    <h2>EMR Systems — The Computer Systems Nurses Use</h2>
+    <div class="bar"></div>
+    <p>Every hospital runs on a computer system where nurses document patient care. As a new recruiter, you need to know which system each facility type uses — and ask every candidate which ones they know. It takes 30 seconds and prevents a lot of wasted submissions.</p>
+  </div>
+
+  <div class="story sr">
+    <div class="story-eye">💻 WHY EMR MATTERS TO YOU AS A RECRUITER</div>
+    <h3>In Plain English: It's the Software Nurses Use Every Shift</h3>
+    <p>An <strong>EMR (Electronic Medical Record)</strong> is the software that healthcare workers use to document everything about their patients — medicines given, vital signs, doctor's orders, nurse's notes. Every hospital has one. Every clinical worker uses it every single shift.</p>
+    <p>Here's why it matters to you: <strong>If a nurse learned on Epic and the hospital uses Cerner, they'll need extra training before they're fully productive.</strong> Hospitals know this and will sometimes decline a candidate who doesn't match their system — even if that candidate is otherwise perfect. One question prevents that rejection.</p>
+    <div class="callout blue">💡 <strong>The one rule to remember:</strong> Ask every candidate: "Which computer system (EMR) have you used at your last job, and when?" Then check what the facility uses. Simple. Fast. Effective.</div>
+  </div>
+
+  <!-- EMR Cards Grid -->
+  <div class="grid g2 sr mt">
+    <div class="card" style="border-top:4px solid #EE1A0F;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(238,26,15,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">⚡</div>
+        <div><div style="font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--accent);">MOST COMMON IN LARGE HOSPITALS</div><h3 style="margin:4px 0 2px;">Epic</h3></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--grey);line-height:1.8;margin-bottom:10px;">The most widely used hospital software in the US. If your candidate works at a large hospital, there's a good chance they're on Epic. Used at big health systems, university hospitals, and Magnet-designated facilities.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"><span class="tag-badge b-red">Large Hospitals</span><span class="tag-badge b-blu">Academic Centers</span><span class="tag-badge b-gld">Magnet Hospitals</span></div>
+      <div class="callout green" style="font-size:0.8rem;">✅ <strong>Ask candidates:</strong> "Have you used Epic? When was your last shift on it?" Recent experience matters — the system updates regularly.</div>
+    </div>
+
+    <div class="card" style="border-top:4px solid #1B5E8A;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(27,94,138,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🔷</div>
+        <div><div style="font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--blue);">KEY FOR VA HOSPITALS</div><h3 style="margin:4px 0 2px;">Oracle Health (Cerner)</h3></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--grey);line-height:1.8;margin-bottom:10px;">The second-biggest hospital system and — most importantly for HonorVet — the system the VA is switching to across all 170 VA hospitals. Community hospitals use it too. If you're placing anyone at a VA, ask about Cerner.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"><span class="tag-badge b-nav">VA Medical Centers 🎖️</span><span class="tag-badge b-blu">Community Hospitals</span></div>
+      <div class="callout" style="font-size:0.8rem;background:rgba(13,45,74,0.05);border-color:rgba(13,45,74,0.15);color:var(--navy);">🎖️ <strong>HonorVet priority:</strong> Candidates with Cerner experience are your most valuable candidates for VA placements. Always ask.</div>
+    </div>
+
+    <div class="card" style="border-top:4px solid #27AE60;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(39,174,96,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🟢</div>
+        <div><div style="font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--green);">STANDARD FOR RURAL HOSPITALS</div><h3 style="margin:4px 0 2px;">MEDITECH</h3></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--grey);line-height:1.8;margin-bottom:10px;">The most common system at Critical Access Hospitals and small-to-mid community hospitals — especially in rural areas and the Northeast. If your candidate has worked at rural or smaller hospitals, they probably know MEDITECH.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"><span class="tag-badge b-grn">Critical Access Hospitals</span><span class="tag-badge b-org">Small Community Hospitals</span></div>
+      <div class="callout green" style="font-size:0.8rem;">🌾 <strong>Rural placements:</strong> MEDITECH experience is perfect for CAH and rural contracts. These candidates are often undervalued — and they fill your hardest-to-place jobs.</div>
+    </div>
+
+    <div class="card" style="border-top:4px solid #FF9000;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,144,0,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🏡</div>
+        <div><div style="font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:2px;color:#C07000;">LTC / NURSING HOME STANDARD</div><h3 style="margin:4px 0 2px;">PointClickCare</h3></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--grey);line-height:1.8;margin-bottom:10px;"><strong>This is the most important one for LTC placements.</strong> PointClickCare is the dominant software in nursing homes and skilled nursing facilities nationwide. It is completely different from hospital EMRs. A hospital nurse switching to LTC must learn this system.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"><span class="tag-badge b-org">LTC / Nursing Homes ✅</span><span class="tag-badge b-grn">Skilled Nursing Facilities</span></div>
+      <div class="callout warn" style="font-size:0.8rem;">⚠️ <strong>Key mistake to avoid:</strong> Never assume a nurse with Epic experience can just step into an LTC role. PointClickCare is completely different — ask about it separately.</div>
+    </div>
+
+    <div class="card" style="border-top:4px solid #FDD826;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(253,216,38,0.1);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">🌐</div>
+        <div><div style="font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:2px;color:#8A6800;">CLINICS &amp; COMMUNITY HEALTH</div><h3 style="margin:4px 0 2px;">eClinicalWorks &amp; athenahealth</h3></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--grey);line-height:1.8;margin-bottom:10px;">These are outpatient clinic systems — used at community health centers (FQHCs), primary care offices, and urgent care. Very different from hospital systems. If you're placing a Nurse Practitioner or Family Medicine doctor at a clinic, ask about these.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"><span class="tag-badge b-gld">FQHCs / Community Clinics</span><span class="tag-badge b-grn">Primary Care Offices</span></div>
+      <div class="callout" style="font-size:0.8rem;">💡 <strong>Note:</strong> These are outpatient-only systems. A candidate who only knows eCW or athena has NOT worked in a hospital. They're clinic-trained providers.</div>
+    </div>
+
+    <div class="card" style="border-top:4px solid #808286;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(128,130,134,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;">☀️</div>
+        <div><div style="font-family:'Courier New',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--grey);">OTHERS YOU MAY ENCOUNTER</div><h3 style="margin:4px 0 2px;">Allscripts / Sunrise / McKesson</h3></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--grey);line-height:1.8;margin-bottom:10px;">Some smaller community hospitals use older or less-common systems like Allscripts Sunrise or McKesson Paragon. These facilities are often in the middle of switching to Epic or Cerner. If you encounter these, it's a sign the hospital may be in transition — which often creates urgent staffing needs.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"><span class="tag-badge b-org">Smaller Community Hospitals</span><span class="tag-badge" style="background:#F2F2F2;color:var(--grey);">Often Mid-Migration</span></div>
+      <div class="callout info" style="font-size:0.8rem;">📋 <strong>Tip:</strong> If a client tells you they're switching EMR systems, that's an opportunity. System transitions create urgent, short-term staffing needs for extra experienced hands during changeover.</div>
+    </div>
+  </div>
+
+  <!-- EMR Market Share Chart -->
+  <div class="sr mt2" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 24px;box-shadow:var(--shadow);">
+    <div style="font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:3px;color:var(--accent);margin-bottom:20px;text-align:center;">US HOSPITAL EMR MARKET SHARE — 2026 ESTIMATES</div>
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:680px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:12px;"><div style="width:100px;font-family:'Poppins',sans-serif;font-weight:700;font-size:0.78rem;color:var(--charcoal);flex-shrink:0;text-align:right;">Epic</div><div style="flex:1;height:32px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:0%;background:linear-gradient(90deg,#EE1A0F,#FF5500);border-radius:6px;transition:width 1.5s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px;" class="emr-bar" data-width="78%"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.72rem;font-weight:700;white-space:nowrap;">~78% of large hospitals</span></div></div><div style="width:44px;font-family:'Courier New',monospace;font-size:0.75rem;font-weight:700;color:var(--accent);flex-shrink:0;">78%</div></div>
+      <div style="display:flex;align-items:center;gap:12px;"><div style="width:100px;font-family:'Poppins',sans-serif;font-weight:700;font-size:0.78rem;color:var(--charcoal);flex-shrink:0;text-align:right;">Oracle/Cerner</div><div style="flex:1;height:32px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:0%;background:linear-gradient(90deg,#1B5E8A,#0077CC);border-radius:6px;transition:width 1.5s .1s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px;" class="emr-bar" data-width="25%"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.72rem;font-weight:700;white-space:nowrap;">Community + VA</span></div></div><div style="width:44px;font-family:'Courier New',monospace;font-size:0.75rem;font-weight:700;color:var(--blue);flex-shrink:0;">25%</div></div>
+      <div style="display:flex;align-items:center;gap:12px;"><div style="width:100px;font-family:'Poppins',sans-serif;font-weight:700;font-size:0.78rem;color:var(--charcoal);flex-shrink:0;text-align:right;">MEDITECH</div><div style="flex:1;height:32px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:0%;background:linear-gradient(90deg,#27AE60,#1A8A48);border-radius:6px;transition:width 1.5s .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px;" class="emr-bar" data-width="15%"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.72rem;font-weight:700;white-space:nowrap;">Rural + Community</span></div></div><div style="width:44px;font-family:'Courier New',monospace;font-size:0.75rem;font-weight:700;color:var(--green);flex-shrink:0;">15%</div></div>
+      <div style="display:flex;align-items:center;gap:12px;"><div style="width:100px;font-family:'Poppins',sans-serif;font-weight:700;font-size:0.78rem;color:var(--charcoal);flex-shrink:0;text-align:right;">PointClickCare</div><div style="flex:1;height:32px;background:#F0F0F0;border-radius:6px;overflow:hidden;"><div style="height:100%;width:0%;background:linear-gradient(90deg,#FF9000,#e07800);border-radius:6px;transition:width 1.5s .3s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px;" class="emr-bar" data-width="70%"><span style="color:#fff;font-family:'Courier New',monospace;font-size:0.72rem;font-weight:700;white-space:nowrap;">Nursing homes dominant</span></div></div><div style="width:44px;font-family:'Courier New',monospace;font-size:0.75rem;font-weight:700;color:#C07000;flex-shrink:0;">70%†</div></div>
+    </div>
+    <div style="margin-top:14px;font-size:0.68rem;color:var(--muted);text-align:center;font-style:italic;">† Within their respective care settings. Hospital share based on large hospital beds.</div>
+  </div>
+
+  <!-- 3 Questions -->
+  <div class="story sr mt">
+    <div class="story-eye">📞 YOUR ACTION PLAN — 3 SIMPLE QUESTIONS TO ASK EVERY CANDIDATE</div>
+    <h3>That's All It Takes</h3>
+    <div class="grid g3 mt">
+      <div class="card"><span class="card-ico">1️⃣</span><h3>"Which computer system do you use at work?"</h3><p>Get the name — Epic, Cerner, MEDITECH, PointClickCare, or something else. Write it down. Include it in every submission note.</p><span class="tag-badge b-red">Always Ask</span></div>
+      <div class="card"><span class="card-ico">2️⃣</span><h3>"When did you last use it?"</h3><p>Experience from 3 years ago may not count for a facility that needs someone who can hit the ground running. Most facilities want recent, active experience.</p><span class="tag-badge b-org">Verify Recency</span></div>
+      <div class="card"><span class="card-ico">3️⃣</span><h3>"How comfortable are you — 1 to 10?"</h3><p>A quick self-rating tells you if they're a power user or just have basic exposure. A 7+ in the right system is a selling point you should mention in your submission email.</p><span class="tag-badge b-grn">Use It to Sell</span></div>
+    </div>
+  </div>
+  <div class="visual-quote sr mt">
+    <p>"Two nurses apply for the same ICU contract. One says 'Epic proficient, used daily for 18 months.' The other says 'EMR experience.' The hospital picks the first one — every single time. Be specific."</p>
+    <cite>&mdash; HonorVet Recruitment Training &mdash; Module 02</cite>
+  </div>
+</section>
+
+<!-- CH 10: FLASHCARDS -->
+<section id="flashcards">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 10</span>
+    <h2>Flashcard Drill — Test Your Memory</h2>
+    <div class="bar"></div>
+    <p>Click each card to flip and see the answer. Go through all 10 to earn your Flashcard badge.</p>
+  </div>
+  <div class="fc-scene sr" id="fcScene">
+    <div class="fc-card" id="fcCard" onclick="flipCard()">
+      <div class="fc-face fc-front"><h3 id="fcFront">Acute Care Hospital</h3><div class="hint">&#128161; Click to flip</div></div>
+      <div class="fc-face fc-back"><p id="fcBack"></p></div>
+    </div>
+  </div>
+  <div class="fc-nav sr">
+    <button class="btn btn-ghost" onclick="prevCard()" style="padding:8px 18px;font-size:0.78rem;">&#8592; Prev</button>
+    <span class="fc-counter" id="fcCounter">1 / 10</span>
+    <button class="btn btn-primary" onclick="nextCard()" style="padding:8px 18px;font-size:0.78rem;">Next &#8594;</button>
+  </div>
+  <div style="background:#F8F8F8;border:1px solid var(--border);border-radius:10px;padding:14px 18px;max-width:500px;margin:18px auto 0;" class="sr">
+    <div style="font-family:'Courier New',monospace;font-size:0.68rem;letter-spacing:2px;color:var(--accent);margin-bottom:8px;">PROGRESS</div>
+    <div id="fcProgress" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+  </div>
+</section>
+
+<!-- CH 11: CHECKLIST -->
+<section id="checklist">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 11</span>
+    <h2>Pre-Placement Checklist — Before Every Submission</h2>
+    <div class="bar"></div>
+    <p>Before you submit any candidate, run through this list. Check all 10 to earn your Checklist badge.</p>
+  </div>
+  <div class="check-progress sr">Completed: <span id="checkCount">0</span> / 10 items</div>
+  <div class="checklist sr">
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>I know what type of facility this is</h5><p>Hospital, LTACH, Nursing Home, VA, Rehab, CAH — confirmed before reviewing candidates</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>I know what unit/department the job is for</h5><p>ICU, Med-Surg, ER, Tele, OR, L&amp;D — each requires a different candidate profile</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>I've confirmed the trauma level (if applicable)</h5><p>Level I, II, or III — confirmed directly with the client, not assumed</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>I know which EMR the facility uses</h5><p>Epic, Cerner, MEDITECH, PointClickCare, or other — and I've matched it to my candidate</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>My candidate's experience matches this facility type</h5><p>ICU nurse for LTACH, generalist for CAH, certified nurse for Magnet — not mismatched</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>My candidate's experience is recent (last 1–2 years)</h5><p>Old experience in a specialty doesn't count. Facilities want candidates who can start on day one.</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>Magnet hospital? I've checked if my candidate has a BSN degree</h5><p>Most Magnet hospitals require a bachelor's degree in nursing. Screen this before submitting.</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>Rural or CAH placement? I've discussed housing and lifestyle with the candidate</h5><p>Rural placements need housing stipends and honest conversations about living in a small town</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>VA placement? I've confirmed the candidate knows Cerner or the VA's system</h5><p>VA hospitals use Oracle Health (Cerner). VistA (the old system) is being phased out.</p></div></div>
+    <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text"><h5>I can clearly explain this facility to my candidate in one sentence</h5><p>If you can't explain it simply, you're not ready to place someone there. Review this module first.</p></div></div>
+  </div>
+</section>
+
+<!-- CH 12: QUIZ -->
+<section id="quiz">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 12</span>
+    <h2>Knowledge Check — Module 02 Quiz</h2>
+    <div class="bar"></div>
+    <p>10 questions on everything you've learned. Score 80% or higher to unlock your certificate.</p>
+  </div>
+  <div class="quiz-box sr">
+    <div class="q-hdr">
+      <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.9rem;">Facility Types Quiz</div>
+      <div class="q-counter" id="qCounter">Question 1 / 10</div>
+    </div>
+    <div class="q-prog-track"><div class="q-prog-fill" id="qProg" style="width:10%"></div></div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-opts" id="qOpts"></div>
+    <div class="q-fb" id="qFb"></div>
+    <div class="q-next" id="qNext"><button class="btn btn-primary" onclick="nextQ()">Next Question &rarr;</button></div>
+  </div>
+</section>
+
+
+<!-- CH 13: MATCH GAME -->
+<section id="matchgame">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 12</span>
+    <h2>Match Game &mdash; Facility to Key Fact</h2>
+    <div class="bar"></div>
+    <p>Match each facility type to its defining characteristic. All 6 correct = Match Master badge + 40 points.</p>
+  </div>
+  <div class="match-wrap sr">
+    <div class="match-col">
+      <h4>FACILITY TYPE</h4>
+      <div class="m-item" onclick="selectLeft(this)" data-id="1">Acute Care Hospital</div>
+      <div class="m-item" onclick="selectLeft(this)" data-id="2">LTACH</div>
+      <div class="m-item" onclick="selectLeft(this)" data-id="3">LTC / SNF</div>
+      <div class="m-item" onclick="selectLeft(this)" data-id="4">Critical Access Hospital</div>
+      <div class="m-item" onclick="selectLeft(this)" data-id="5">Level I Trauma</div>
+      <div class="m-item" onclick="selectLeft(this)" data-id="6">FQHC</div>
+    </div>
+    <div class="match-col">
+      <h4>DEFINING CHARACTERISTIC</h4>
+      <div class="m-item" onclick="selectRight(this)" data-id="3">Custodial care + ADLs; acuity-based staffing (2026 federal standard after rule repeal)</div>
+      <div class="m-item" onclick="selectRight(this)" data-id="5">24/7 in-house trauma surgeon + &gt;1,200 admissions/yr + active research required</div>
+      <div class="m-item" onclick="selectRight(this)" data-id="1">Short-term stabilization and discharge; primary entry point for acute illness and surgery</div>
+      <div class="m-item" onclick="selectRight(this)" data-id="6">Sliding fee scale primary care; Section 330 federal funding; NHSC loan repayment eligible</div>
+      <div class="m-item" onclick="selectRight(this)" data-id="2">Medicare avg LOS ≥25 days; vent weaning, wound care, complex infection management</div>
+      <div class="m-item" onclick="selectRight(this)" data-id="4">≤25 acute care beds; ≥35 miles from nearest hospital; cost-based Medicare reimbursement</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:18px;" id="matchResult"></div>
+</section>
+
+<!-- CH 14: BADGES -->
+<section id="badges">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 13</span>
+    <h2>Achievement Badges</h2>
+    <div class="bar"></div>
+    <p>Badges unlock as you read each section and complete each activity. Earn all 8 to unlock your certificate.</p>
+  </div>
+  <div class="badges-wrap sr">
+    <div class="badge-item" id="badge-acute"><div class="badge-ico br">🏥</div><div class="badge-lbl">Acute Expert</div></div>
+    <div class="badge-item" id="badge-trauma"><div class="badge-ico br">🚑</div><div class="badge-lbl">Trauma Ready</div></div>
+    <div class="badge-item" id="badge-ltach"><div class="badge-ico bbl">⚕️</div><div class="badge-lbl">LTACH Specialist</div></div>
+    <div class="badge-item" id="badge-ltc"><div class="badge-ico bgr">🏡</div><div class="badge-lbl">LTC Pro</div></div>
+    <div class="badge-item" id="badge-geo"><div class="badge-ico bo">🗺️</div><div class="badge-lbl">Geography Map</div></div>
+    <div class="badge-item" id="badge-flash"><div class="badge-ico bg">📚</div><div class="badge-lbl">Card Flipper</div></div>
+    <div class="badge-item" id="badge-check"><div class="badge-ico bgr">✅</div><div class="badge-lbl">Checklist Ready</div></div>
+    <div class="badge-item" id="badge-quiz"><div class="badge-ico br">🏆</div><div class="badge-lbl">Quiz Champion</div></div>
+  </div>
+</section>
+
+<!-- CH 15: CERTIFICATE -->
+<section id="cert">
+  <div class="sh sr">
+    <span class="tag">// CHAPTER 14</span>
+    <h2>Certificate of Completion</h2>
+    <div class="bar"></div>
+    <p>Pass the quiz (80%+) then enter your name to generate your personalized certificate.</p>
+  </div>
+  <div class="cert-input-wrap sr">
+    <input type="text" id="certNameInput" placeholder="Enter your full name..." maxlength="60">
+    <button class="btn btn-primary" onclick="generateCert()">Generate &rarr;</button>
+  </div>
+  <div id="certDisplay" style="display:none;">
+    <div class="cert-box sr">
+      <div style="font-size:0.58rem;letter-spacing:3px;color:#AAAAAA;font-weight:600;margin-bottom:22px;">SERVICE-DISABLED VETERAN OWNED SMALL BUSINESS</div>
+      <div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,#EE1A0F 30%,#FF9000 50%,#EE1A0F 70%,transparent);margin-bottom:20px;"></div>
+      <div style="font-size:0.75rem;letter-spacing:4px;color:#EE1A0F;font-weight:700;margin-bottom:6px;">CERTIFICATE OF COMPLETION</div>
+      <div style="font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:3px;">US Healthcare Facility Types</div>
+      <div style="font-size:0.82rem;color:rgba(255,255,255,0.6);margin-bottom:20px;font-style:italic;">Healthcare Recruitment Training &mdash; Module 02 &mdash; 2026 Edition</div>
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-bottom:10px;">This is to proudly certify that</div>
+      <div id="certNameDisplay" style="font-size:2rem;font-weight:800;line-height:1.1;margin-bottom:16px;background:linear-gradient(90deg,#EE1A0F,#FF9000);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border-bottom:2px solid rgba(238,26,15,0.4);padding-bottom:10px;display:inline-block;min-width:280px;"></div>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.9;max-width:560px;margin:10px auto 0;">has successfully completed the <strong style="color:#fff;">US Healthcare Facility Types</strong> training module — demonstrating knowledge of Acute Care Hospitals, Trauma Center designations (Level I/II/III), Long-Term Acute Care Hospitals (LTACH), Long-Term Care facilities (LTC/SNF), Critical Access Hospitals, VA Medical Centers, Academic Medical Centers, and the 2026 CMS regulatory updates governing each facility type.</p>
+      <div class="cert-topics" style="margin-top:18px;">
+        <span class="cert-topic">Acute Care</span>
+        <span class="cert-topic">Level I–III Trauma</span>
+        <span class="cert-topic">LTACH / FY2026 PPS</span>
+        <span class="cert-topic">LTC Staffing Rule 2026</span>
+        <span class="cert-topic">Critical Access</span>
+        <span class="cert-topic">VA Medical Centers</span>
+        <span class="cert-topic">Geographic Distribution</span>
+      </div>
+      <div id="certMeta" style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin:16px 0 20px;letter-spacing:1px;"></div>
+      <div style="width:100%;height:1px;background:#333;margin-bottom:18px;"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div style="font-family:'Poppins',sans-serif;font-style:italic;font-size:1.4rem;font-weight:600;color:#fff;border-bottom:2px solid #555;padding-bottom:6px;min-width:240px;text-align:center;">Rachana Narang</div>
+        <div style="font-size:0.68rem;color:#EE1A0F;font-weight:600;letter-spacing:2px;margin-top:6px;">AUTHORIZED — HONORVET TECHNOLOGIES</div>
+        <div style="font-size:0.62rem;color:#666;margin-top:3px;">honorvettech.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-bg" id="quizModal">
+  <div class="modal-box">
+    <h2 id="modalTitle">Quiz Complete!</h2>
+    <div class="modal-score" id="modalScore"></div>
+    <p id="modalMsg"></p>
+    <button class="btn btn-primary" id="modalBtn" onclick="document.getElementById('quizModal').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-flag"><div class="f1"></div><div class="f2"></div><div class="f3"></div></div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;">
+    <img src="data:image/png;base64,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" style="height:36px;width:auto;object-fit:contain;mix-blend-mode:multiply;" alt="HonorVet Technologies">
+    <span style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.85rem;color:#231F20;">HONORVET TECHNOLOGIES</span>
+    <span style="color:#CCC;">|</span>
+    <span style="font-size:0.65rem;color:#EE1A0F;letter-spacing:2px;">SDVOSB CERTIFIED</span>
+  </div>
+  <p style="margin-bottom:6px;">US Healthcare Facility Types &mdash; Recruitment Training Module 02 &mdash; 2026 Edition</p>
+  <p style="font-size:0.75rem;color:#AAAAAA;">Content updated for 2026 &middot; Built for SharePoint &middot; &copy; 2025 HonorVet Technologies</p>
+</footer>
+
+<script>
+// ── Score & Progress ──
+let totalScore = 0;
+const scored = {};
+function addScore(key, pts) {
+  if (scored[key]) return;
+  scored[key] = true;
+  totalScore += pts;
+  document.getElementById('totalScore').textContent = totalScore;
+  document.getElementById('miniScore').textContent = totalScore + ' pts';
+}
+function markDone(id) {
+  const dot = document.getElementById('pd-' + id);
+  if (dot) { dot.classList.remove('active'); dot.classList.add('done'); }
+}
+function markActive(id) {
+  const dot = document.getElementById('pd-' + id);
+  if (dot && !dot.classList.contains('done')) dot.classList.add('active');
+}
+
+// ── Scroll bar ──
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scrollBar');
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  if (h > 0) el.style.width = (window.scrollY / h * 100) + '%';
+});
+
+// ── Progress panel toggle ──
+function toggleProgress() {
+  document.getElementById('progPanel').classList.toggle('minimized');
+}
+
+// ── Scroll reveal ──
+const srObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.sr').forEach(el => srObs.observe(el));
+
+// ── Section progress tracking ──
+const secMap = {
+  overview:'overview', acutecare:'acutecare', trauma:'trauma',
+  ltach:'ltach', ltc:'ltc', other:'other', where:'where',
+  matrix:'where', emr:'emr', flashcards:'flashcards', checklist:'checklist',
+  quiz:'quiz', matchgame:'match', badges:'match', cert:'quiz'
+};
+const secObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const pid = secMap[e.target.id];
+      if (pid) markActive(pid);
+      if (e.target.id === 'acutecare') { earnBadge('acute','b-acute',20); markDone('acutecare'); }
+      if (e.target.id === 'trauma')    { earnBadge('trauma','b-trauma',20); markDone('trauma'); }
+      if (e.target.id === 'ltach')     { earnBadge('ltach','b-ltach',20); markDone('ltach'); }
+      if (e.target.id === 'ltc')       { earnBadge('ltc','b-ltc',20); markDone('ltc'); }
+      if (e.target.id === 'where')     { earnBadge('geo','b-geo',20); markDone('where'); }
+      if (e.target.id === 'emr') {
+        earnBadge('geo','b-emr',20); markDone('emr');
+        e.target.querySelectorAll('.emr-bar').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width; }, 300);
+        });
+      }
+    }
+  });
+}, { threshold: 0.35 });
+document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
+
+// ── Badges ──
+const badgeEarned = {};
+function earnBadge(id, key, pts) {
+  if (badgeEarned[key]) return;
+  badgeEarned[key] = true;
+  const el = document.getElementById('badge-' + id);
+  if (el) el.classList.add('earned');
+  addScore(key, pts);
+}
+
+// ── Accordion ──
+function openAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  btn.closest('.acc').querySelectorAll('.acc-body').forEach(b => {
+    b.classList.remove('open');
+    b.previousElementSibling.classList.remove('open');
+  });
+  if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); addScore('acc-' + btn.textContent.trim().substring(0,20), 5); }
+}
+
+// ── Checklist ──
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  const box = item.querySelector('.check-box');
+  box.textContent = item.classList.contains('checked') ? '&#10003;' : '';
+  const done = document.querySelectorAll('.check-item.checked').length;
+  const total = document.querySelectorAll('.check-item').length;
+  document.getElementById('checkCount').textContent = done;
+  if (done === total) { earnBadge('check','b-checklist',30); markDone('checklist'); addScore('checklist-done',20); }
+}
+
+// ── Flashcards ──
+const cards = [
+  { front:'Acute Care Hospital', back:'A regular hospital where people go for emergencies, surgeries, and serious illness. Goal: treat and discharge quickly. Average stay: 3-5 days. The ER is the front door. Feeds patients to LTACHs, rehab centers, and nursing homes.' },
+  { front:'ICU vs Med-Surg vs Tele', back:'ICU = sickest patients, 1:1 or 1:2 nurse ratio, highest pay ($90-$135/hr). Tele/Step-Down = improving patients on heart monitors. Med-Surg = general floor, most common unit, highest placement volume ($55-$85/hr).' },
+  { front:'Level I vs II vs III Trauma', back:'Level I: surgeon IN the building 24/7, requires research, major cities only. Level II: surgeon IN the building 24/7, no research, suburbs. Level III: surgeon ON-CALL within 30 min, smaller towns. All stabilize patients but Level III transfers complex cases.' },
+  { front:'LTACH', back:'A hospital for patients who need medical care for 25+ days after leaving a regular hospital. NOT a nursing home. Treats patients on breathing machines, serious wounds, complex infections. Needs experienced ICU nurses and Respiratory Therapists.' },
+  { front:'LTC / SNF', back:'Nursing homes and Skilled Nursing Facilities. 24-hour care for people who can no longer live independently. Help with bathing, dressing, eating. Staff: mostly CNAs and LPNs, fewer RNs than hospitals. EMR used: PointClickCare (not Epic or Cerner).' },
+  { front:'2026 LTC Staffing Change', back:'The rule requiring 24/7 RN coverage at nursing homes was repealed in December 2025. Current federal rule: RN on-site 8 hours/day. But the nursing shortage did not go away. LTC still desperately needs CNAs, LPNs, and RNs. State rules may be stricter.' },
+  { front:'Critical Access Hospital (CAH)', back:'Small rural hospital: max 25 beds, at least 35 miles from the nearest hospital. Gets special government funding to stay open. Over 40% nursing vacancy rates. Best pitch: student loan forgiveness up to $50,000 for rural clinicians.' },
+  { front:'VA Medical Center', back:'Government hospitals for military veterans. 170 across the US. HonorVet priority market - our SDVOSB certification gives us preference in VA contracts. High need: mental health, primary care, brain injury. EMR: Oracle Health (Cerner).' },
+  { front:'Magnet Hospital', back:'A hospital with a special nursing excellence award from ANCC. Only about 600 US hospitals have it (~10%). Key recruiter rule: Magnet hospitals usually require nurses to have a BSN (bachelor\'s degree). Always check before submitting.' },
+  { front:'EMR Systems Quick Guide', back:'Epic = Large hospitals, AMCs, Magnet facilities. Cerner/Oracle = VA hospitals, community hospitals. MEDITECH = Critical Access and rural hospitals. PointClickCare = LTC/nursing homes ONLY (different from all hospital EMRs). eClinicalWorks/athena = Clinics and FQHCs.' }
+];
+
+let fcIndex = 0, fcFlipped = false;
+const fcViewed = new Set();
+
+function renderCard() {
+  document.getElementById('fcFront').textContent = cards[fcIndex].front;
+  document.getElementById('fcBack').textContent = cards[fcIndex].back;
+  document.getElementById('fcCounter').textContent = (fcIndex + 1) + ' / ' + cards.length;
+  document.getElementById('fcCard').classList.remove('flip');
+  fcFlipped = false;
+  renderFcProg();
+}
+function flipCard() {
+  document.getElementById('fcCard').classList.toggle('flip');
+  fcFlipped = !fcFlipped;
+  if (fcFlipped) {
+    fcViewed.add(fcIndex);
+    addScore('fc-' + fcIndex, 5);
+    if (fcViewed.size === cards.length) { earnBadge('flash','b-flash',30); markDone('flashcards'); }
+    renderFcProg();
+  }
+}
+function nextCard() { fcIndex = (fcIndex + 1) % cards.length; renderCard(); }
+function prevCard() { fcIndex = (fcIndex - 1 + cards.length) % cards.length; renderCard(); }
+function renderFcProg() {
+  const el = document.getElementById('fcProgress');
+  if (!el) return;
+  el.innerHTML = cards.map((c,i) => `<div onclick="fcIndex=${i};renderCard()" style="width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;cursor:pointer;border:1px solid ${i===fcIndex?'var(--accent)':'#E0E0E0'};background:${fcViewed.has(i)?'rgba(39,174,96,0.12)':i===fcIndex?'rgba(238,26,15,0.07)':'#F8F8F8'};color:${fcViewed.has(i)?'var(--green)':i===fcIndex?'var(--accent)':'var(--grey)'}">${i+1}</div>`).join('');
+}
+renderCard();
+
+// ── Quiz ──
+const questions = [
+  {
+    q: 'What is the PRIMARY goal of an Acute Care Hospital?',
+    opts: ['Provide 24-hour custodial care for daily living activities', 'Stabilize and discharge patients as quickly and safely as possible', 'Provide intensive therapy for 3+ hours per day', 'Care for patients who need 25+ day average stays'],
+    ans: 1,
+    fb: 'Acute Care Hospitals focus on short-term treatment. The goal is always to treat the patient and get them safely discharged to home or the next level of care like an LTACH or nursing home.'
+  },
+  {
+    q: 'Which unit in a hospital cares for the SICKEST patients who need one-on-one nursing attention?',
+    opts: ['Med-Surg floor', 'Telemetry / Step-Down', 'ICU (Intensive Care Unit)', 'Emergency Department'],
+    ans: 2,
+    fb: 'The ICU (Intensive Care Unit) is for the most critically ill patients - those on breathing machines, heart monitors, and requiring constant nursing attention. ICU nurses are typically the highest-paid nurses in a hospital at $90-$135/hr or more.'
+  },
+  {
+    q: 'A Level I Trauma Center requires which of the following that Level III does NOT?',
+    opts: ['A functioning emergency department', 'A surgeon physically in the building 24 hours a day', 'Basic nursing staff on every floor', 'An outpatient clinic'],
+    ans: 1,
+    fb: 'Level I Trauma Centers require a surgeon physically present in the building 24/7 - not just reachable by phone. Level III Trauma Centers only need a surgeon on-call who can arrive within 30 minutes. This is a crucial difference when matching candidates to trauma facilities.'
+  },
+  {
+    q: 'What is the minimum average length of stay that makes a facility qualify as an LTACH?',
+    opts: ['5 days', '10 days', '25 days', '60 days'],
+    ans: 2,
+    fb: 'Medicare requires LTACHs to have an average patient stay of 25 days or more. This separates them from regular hospitals (average 3-5 days) and nursing homes. If a facility average falls below 25 days, it loses its LTACH designation and the special Medicare funding that comes with it.'
+  },
+  {
+    q: 'What does "LTC" stand for and what kind of care does it provide?',
+    opts: ['Level Trauma Care - emergency trauma services', 'Long-Term Care - 24-hour nursing and daily living help for people who cannot live independently', 'Licensed Treatment Center - outpatient addiction services', 'Large Teaching Clinic - ambulatory care for complex cases'],
+    ans: 1,
+    fb: 'Long-Term Care (LTC) provides 24-hour nursing care and help with Activities of Daily Living (ADLs) - bathing, dressing, eating, mobility - for people who cannot safely live on their own. Nursing homes and Skilled Nursing Facilities (SNFs) are the most common type of LTC facility.'
+  },
+  {
+    q: 'What is special about a Critical Access Hospital (CAH)?',
+    opts: ['It only treats children under 18', 'It must have over 500 beds', 'It is a small rural hospital (max 25 beds) at least 35 miles from the nearest hospital', 'It specializes in cancer treatment only'],
+    ans: 2,
+    fb: 'Critical Access Hospitals are small rural hospitals serving communities where the nearest other hospital is 35+ miles away. They get special government funding to stay open. With nursing vacancy rates over 40%, they are one of the most urgent staffing markets - and one of the most loyal client relationships you can build.'
+  },
+  {
+    q: 'Why is HonorVet specifically well-positioned to serve VA Medical Centers?',
+    opts: ['HonorVet is the largest staffing agency in the US', 'HonorVet is certified as a Service-Disabled Veteran-Owned Small Business (SDVOSB), which gives preference in VA contracts', 'HonorVet only places nurses', 'HonorVet is headquartered next to a VA hospital'],
+    ans: 1,
+    fb: 'HonorVet\'s SDVOSB certification gives us a competitive preference when the VA awards contracts. This is a real structural advantage - the VA gives priority to SDVOSB vendors. Combined with our veteran-centered mission, VA placements are our most strategic market.'
+  },
+  {
+    q: 'If a candidate says they work in "Med-Surg," what does that tell you as a recruiter?',
+    opts: ['They work in the Emergency Room', 'They work in a surgical operating room', 'They work on a general hospital floor caring for a variety of medical and post-surgery patients', 'They specialize in intensive care for very sick patients'],
+    ans: 2,
+    fb: 'Med-Surg (Medical-Surgical) is the most common hospital floor - it handles general medical patients and post-surgical recovery. This is the highest-volume placement area for travel nurses. A Med-Surg nurse can be placed at most community and regional hospitals.'
+  },
+  {
+    q: 'Which EMR system is most widely used at large hospitals, academic medical centers, and Magnet hospitals?',
+    opts: ['eClinicalWorks', 'MEDITECH', 'Epic', 'PointClickCare'],
+    ans: 2,
+    fb: 'Epic is used by the majority of large US health systems and academic medical centers. When a large hospital sends you a job order, there is a strong chance the candidate needs recent Epic experience. Always ask: "Which computer system have you used in the last year?"'
+  },
+  {
+    q: 'Which software platform is standard for Long-Term Care (LTC) and nursing homes - completely different from hospital computer systems?',
+    opts: ['Epic', 'Oracle Health (Cerner)', 'MEDITECH', 'PointClickCare'],
+    ans: 3,
+    fb: 'PointClickCare is the dominant software in nursing homes and skilled nursing facilities. It is specifically designed for long-term care - not for hospitals. A nurse moving from a hospital to a nursing home will need to learn PointClickCare. Never assume hospital EMR experience transfers to LTC settings.'
+  }
+];
+
+let qIndex = 0, qScore = 0, qAnswered = false;
+
+function renderQ() {
+  const q = questions[qIndex];
+  document.getElementById('qCounter').textContent = 'Question ' + (qIndex + 1) + ' / ' + questions.length;
+  document.getElementById('qProg').style.width = ((qIndex + 1) / questions.length * 100) + '%';
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qOpts').innerHTML = q.opts.map((o, i) => `<button class="q-opt" onclick="answerQ(${i},this)">${o}</button>`).join('');
+  document.getElementById('qFb').className = 'q-fb';
+  document.getElementById('qNext').className = 'q-next';
+  qAnswered = false;
+}
+
+function answerQ(i, btn) {
+  if (qAnswered) return;
+  qAnswered = true;
+  const q = questions[qIndex];
+  document.querySelectorAll('.q-opt').forEach(b => b.classList.add('disabled'));
+  const fb = document.getElementById('qFb');
+  if (i === q.ans) {
+    btn.classList.add('correct');
+    qScore++;
+    addScore('q-' + qIndex, 10);
+    fb.className = 'q-fb cfb show';
+    fb.textContent = '✓ Correct! ' + q.fb;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.q-opt')[q.ans].classList.add('correct');
+    fb.className = 'q-fb wfb show';
+    fb.textContent = '✗ Not quite. ' + q.fb;
+  }
+  document.getElementById('qNext').className = 'q-next show';
+}
+
+function nextQ() {
+  qIndex++;
+  if (qIndex < questions.length) {
+    renderQ();
+  } else {
+    const pct = Math.round(qScore / questions.length * 100);
+    const passed = pct >= 80;
+    document.getElementById('modalTitle').textContent = passed ? 'Quiz Passed!' : 'Quiz Complete';
+    document.getElementById('modalScore').textContent = pct + '%';
+    document.getElementById('modalMsg').textContent = passed
+      ? 'Great work! You scored ' + qScore + '/' + questions.length + '. Your certificate is ready in the final chapter.'
+      : 'You scored ' + qScore + '/' + questions.length + '. You need 80% to pass. Review the chapters and try again!';
+    document.getElementById('quizModal').classList.add('open');
+    const btn = document.getElementById('modalBtn');
+    if (passed) {
+      earnBadge('quiz','b-quiz',50); markDone('quiz');
+      addScore('quiz-pass',30);
+      btn.textContent = 'Get My Certificate';
+      btn.onclick = () => { document.getElementById('quizModal').classList.remove('open'); document.getElementById('cert').scrollIntoView({behavior:'smooth'}); };
+    } else {
+      btn.textContent = 'Try Again';
+      btn.onclick = () => { qIndex = 0; qScore = 0; renderQ(); document.getElementById('quizModal').classList.remove('open'); };
+    }
+  }
+}
+renderQ();
+
+// ── Match Game ──
+let leftSel = null, rightSel = null, matchedCount = 0;
+function selectLeft(el) {
+  document.querySelectorAll('.match-col:first-child .m-item:not(.matched)').forEach(i => i.classList.remove('sel'));
+  el.classList.add('sel'); leftSel = el; tryMatch();
+}
+function selectRight(el) {
+  document.querySelectorAll('.match-col:last-child .m-item:not(.matched)').forEach(i => i.classList.remove('sel'));
+  el.classList.add('sel'); rightSel = el; tryMatch();
+}
+function tryMatch() {
+  if (!leftSel || !rightSel) return;
+  if (leftSel.dataset.id === rightSel.dataset.id) {
+    leftSel.classList.remove('sel'); leftSel.classList.add('matched');
+    rightSel.classList.remove('sel'); rightSel.classList.add('matched');
+    matchedCount++;
+    addScore('match-' + leftSel.dataset.id, 10);
+    if (matchedCount === 6) {
+      document.getElementById('matchResult').innerHTML = '<div style="margin-top:14px;padding:14px 20px;background:rgba(39,174,96,0.08);border:1px solid rgba(39,174,96,0.3);border-radius:10px;color:#1A7A35;font-weight:700;font-size:0.88rem;">All 6 matched! Match Master badge earned.</div>';
+      earnBadge('quiz','b-match',40); markDone('match');
+    }
+    leftSel = null; rightSel = null;
+  } else {
+    leftSel.classList.add('bad'); rightSel.classList.add('bad');
+    const l = leftSel, r = rightSel; leftSel = null; rightSel = null;
+    setTimeout(() => { l.classList.remove('bad','sel'); r.classList.remove('bad','sel'); }, 600);
+  }
+}
+
+// ── Certificate ──
+function generateCert() {
+  const name = document.getElementById('certNameInput').value.trim();
+  if (!name) { alert('Please enter your name to generate the certificate.'); return; }
+  const pct = Math.round(qScore / questions.length * 100);
+  if (pct < 80) { alert('Complete the quiz with 80% or higher to unlock the certificate. Head to the Quiz chapter!'); return; }
+  document.getElementById('certNameDisplay').textContent = name;
+  document.getElementById('certMeta').textContent = 'Quiz Score: ' + pct + '% · Issued: ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) + ' · Module 02 · 2026 Edition';
+  const d = document.getElementById('certDisplay');
+  d.style.display = 'block';
+  d.querySelectorAll('.sr').forEach(el => el.classList.add('vis'));
+  d.scrollIntoView({ behavior:'smooth' });
+  addScore('cert-generated', 20);
+}
+</script>
+</body>
+</html>
